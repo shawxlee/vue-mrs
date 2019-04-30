@@ -50,17 +50,13 @@
 #footNav a {
 	color: #696969;
 }
-/* 侧边栏样式 */
-.sidebarClass {
-	position: fixed;
-	right: -50%;
-	width: 50%;
-	height: calc(100vh - 3.5rem);
-	background: #E8E8E8;
-	z-index: 9999;
-	transition: width 1s;
-}
-.addWidth {
-	width: 100%;
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+	outline: none;
+	text-shadow: none;
 }
 </style>

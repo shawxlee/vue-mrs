@@ -9,18 +9,18 @@ body {
 	margin: 0;
 	padding-top: 4.5rem;
 	line-height: 0.5rem;
-	background-color: #CFCFCF;
+	background-color: #E8E8E8;
 }
 
 #headNavbar nav {
-	background-color: #363636;
+	border-bottom: 0.1rem solid #E8E8E8;
 }
 #headNavbar span {
-	color: white;
+	color: #363636;
 	font-size: 1.2rem;
 }
 #headNavbar button {
-	border-color: #363636;
+	border-color: #f8f9fa;
 	height: 2.5rem;
 	font-size: 1.2rem;
 }
@@ -43,7 +43,7 @@ body {
 .filmDiv {
 	padding: 0.8rem;
 	margin-bottom: 1rem;
-	background-color: #E8E8E8;
+	background-color: #f8f9fa;
 	border-radius: 1rem;
 }
 .imgDiv {
@@ -111,12 +111,12 @@ body {
 	line-height: 2.5rem;
 }
 .noteDiv p {
-	background-color: #dbdbdb;
+	background-color: #ededed;
 	border-radius: 0.3rem;
-	color: #363636;
+	color: #1C1C1C;
 }
 .noteDiv i {
-	color: #828282;
+	color: #9C9C9C;
 	margin-left: 0.8rem;
 	margin-right: 0.8rem;
 }
@@ -141,15 +141,6 @@ body {
 	height: 3.5rem;
 }
 
-#footNavbar nav {
-	background-color: #363636;
-	height: 3.5rem;
-	line-height: 2.3rem;
-}
-#footNavbar a {
-	color: #9C9C9C;
-	font-size: 1.2rem;
-}
 /* 去除按钮点击后显示的边框 */
 .navbar-toggler:focus,
 .navbar-toggler:active:focus,
@@ -157,13 +148,5 @@ body {
 .navbar-toggler.focus,
 .navbar-toggler:active.focus,
 .navbar-toggler.active.focus {
-	outline: none;
-}
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
 	outline: none;
 }
