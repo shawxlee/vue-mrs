@@ -2,9 +2,7 @@ const webpack = require('webpack')
 
 module.exports = {
   //部署应用包时的基本 URL
-  publicPath: process.env.NODE_ENV === 'production'
-  ? '/movie-recommendation/'
-  : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/mrs/' : '/',
   //当运行 vue-cli-service build 时生成的生产环境构建文件的目录
   outputDir: 'dist',
   //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
@@ -35,51 +33,7 @@ module.exports = {
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
     })
-    ],
-    //加载 style-loader, css-loader, file-loader, url-loader
-    module: {
-      rules: [
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/,
-        use: [
-        {
-          loader: 'file-loader',
-          options: {}
-        }
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/,
-        use: [
-        {
-          loader: 'url-loader',
-          options: {
-            limit: 10000
-          }
-        }
-        ]
-      }
-      ]
-    }
-  },
-  //配置高于chainWebpack中关于 css-loader 的配置
-  css: {
-  	//默认情况下，只有 *.module.[ext] 结尾的文件才会被视作 CSS Modules 模块
-  	modules: false,
-  	//是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)
-  	extract: false,
-  	//是否为 CSS 开启 source map
-  	sourceMap: false,
-  	//向 CSS 相关的 loader 传递选项
-  	loaderOptions: {
-  		css: {
-  			//这里的选项会传递给 css-loader
-  		}
-  	}
+    ]
   },
   //所有 webpack-dev-server 的选项都支持
   devServer: {

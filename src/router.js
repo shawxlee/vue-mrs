@@ -1,29 +1,27 @@
-import Vue from 'vue'    //引入vue框架
-import Router from 'vue-router'    //引入路由依赖
-import AllFilms from './views/AllFilms.vue'    //引入页面组件
-import ToWatch from './views/ToWatch.vue'
-import Watched from './views/Watched.vue'
-//使用路由依赖
+import Vue from 'vue'
+import Router from 'vue-router'
+import All from './views/All.vue'    // 先调用主页
+
 Vue.use(Router)
-//定义路由
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/all',
       name: 'all',
-      component: AllFilms
+      component: All
     },
     {
-      path: '/to-watch',
-      name: 'to-watch',
-      component: ToWatch
+      path: '/watch',
+      name: 'watch',
+      component: () => import('./views/Watch.vue')    // 懒加载第2页
     },
     {
-      path: '/watched',
-      name: 'watched',
-      component: Watched
+      path: '/review',
+      name: 'review',
+      component: () => import('./views/Review.vue')    // 懒加载第3页
     }
   ]
 })

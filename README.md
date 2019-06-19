@@ -1,4 +1,4 @@
-# vue-movies
+# vue-mrs
 
 ## Project setup
 ```
