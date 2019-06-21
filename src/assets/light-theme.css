@@ -171,11 +171,13 @@ body {
 #screen-collapse span {
 	display: inline-block;
 	width: 1rem;
-	padding: 0;
-	margin: 0;
 	font-size: .8rem;
 	line-height: 1;
 	transform: rotate(90deg);
+}
+#screen-collapse .fa-caret-left {
+	margin-left: .05rem;
+	margin-right: .15rem;
 }
 #screen-collapse .active {
 	color: white;
@@ -663,7 +665,7 @@ body {
 .footer .nav-link i {
 	font-size: 1.5rem;
 }
-.footer .router-link-active {
+.footer .active {
 	color: #4f94cd;
 }
 
@@ -672,9 +674,10 @@ body {
 	position: fixed;
 	top: 0;
 	right: 0;
-	bottom: calc(100% - 3.8rem);
 	z-index: 1060;
 	width: 50%;
+	height: calc(100% - 3.8rem);
+	font-size: 1rem;
 	background-color: white;
 }
 /* 过渡：左滑/收起 */

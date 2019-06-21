@@ -17,11 +17,9 @@ VueTouch.config.swipe = {
 }
 Vue.use(VueTouch, {name: 'v-touch'})
 
-Vue.prototype.axios = axios
-
 Vue.config.productionTip = false
 // 将router、touch和App挂载到#app下
-var vm = new Vue({
+var app = new Vue({
 	router,
 	VueTouch,
 	axios,
@@ -34,18 +32,18 @@ $(function () {
 	var screenCollapse = $('#screen-collapse');
 	// 筛选面板展开时按钮变色、隐藏筛选信息
 	screenCollapse.on('show.bs.collapse', function () {
-		vm.screenHidden = false;
+		app.screenHidden = false;
 	});
 
 	// 筛选面板收起后按钮变色、显示筛选信息、隐藏更多标签；若有更多标签被激活则不隐藏
 	screenCollapse.on('hidden.bs.collapse', function () {
-		vm.screenHidden = true;
-		vm.moreHidden = true;
-		if (vm.activeTags.length > 0) {
+		app.screenHidden = true;
+		app.moreHidden = true;
+		if (app.activeTags.length > 0) {
 			let i, len;
-			for (i = 17, len = vm.tags.length; i < len; i++) {
-				if (vm.tags[i].isActive) {
-					vm.moreHidden = false;
+			for (i = 17, len = app.tags.length; i < len; i++) {
+				if (app.tags[i].isActive) {
+					app.moreHidden = false;
 				}
 			}
 		}
@@ -56,8 +54,8 @@ $(function () {
 	nToolbar.on('click', foldUp);
 	function foldUp() {
 		screenCollapse.collapse('hide');
-		if (vm.searchText.length == 0) {
-			vm.hideSearch();
+		if (app.searchText.length == 0) {
+			app.hideSearch();
 		}
 	}
 
@@ -69,7 +67,7 @@ $(function () {
 	// 回到顶部
 	toTop.on('click', function () {
 		$('html, body').animate({ scrollTop: 0 }, 300, 'linear');		
-		vm.headerHidden = false;
+		app.headerHidden = false;
 		seriesNav.animate({ scrollTop: 0 }, 300, 'linear');
 	});
 
@@ -77,7 +75,7 @@ $(function () {
 	toBottom.on('click', function () {
 		var height = $(document).height();
 		$('html, body').animate({ scrollTop: height }, 300, 'linear');
-		vm.headerHidden = false;
+		app.headerHidden = false;
 
 		var snHeight = seriesNav.height();
 		seriesNav.animate({ scrollTop: snHeight }, 300, 'linear');
@@ -89,7 +87,7 @@ $(function () {
 		var scrollTop = $(document).scrollTop();
 		console.log(scrollTop);
 		if (scrollTop < 100) {
-			vm.headerHidden = false;
+			app.headerHidden = false;
 		}
 
 		if (scrollTop == 0) {

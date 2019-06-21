@@ -22,7 +22,7 @@
 			<nav class="navbar navbar-expand-lg border-bottom toolbar" :class="{'toolbar-up': headerHidden}">
 				<!-- 筛选器 -->
 				<div class="toolbar-toggler" data-toggle="collapse" data-target="#screen-collapse">
-					<button class="navbar-toggler px-0" :class="{active: !screenHidden}" type="button">
+					<button class="navbar-toggler pl-0 pr-1" :class="{active: !screenHidden}" type="button">
 						<i class="fas fa-sort-amount-down"></i>
 					</button>
 					<!-- 筛选信息 -->
@@ -53,8 +53,8 @@
 						<!-- 排序按钮 -->
 						<div class="col-4 px-1" v-for="(item, index) in sorts">
 							<v-touch class="btn btn-sm rounded-pill px-2" :class="{active: sortOrder == index + 1}" @tap="sortOrder = index + 1; isReverse = !isReverse">按{{ item }}排序<span>
-								<i class="fas fa-caret-left mr-0" :class="{disabled: !isReverse}"></i>
-								<i class="fas fa-caret-right ml-0" :class="{disabled: isReverse}"></i>
+								<i class="fas fa-caret-left" :class="{disabled: !isReverse}"></i>
+								<i class="fas fa-caret-right" :class="{disabled: isReverse}"></i>
 							</span></v-touch>
 						</div>
 						<div class="w-100"><hr></div>
@@ -363,6 +363,8 @@
 </template>
 
 <script>
+	import allData from "../api/gets"
+
 	export default {
 		name: 'all',
 		components: {},
@@ -528,41 +530,31 @@
 		methods: {
 			// 加载数据并显示状态：若成功则清除筛选信息，然后收起状态栏；否则显示错误提示
 			loadData() {
-				var time = new Date().getTime(),
-				filmsUrl = 'http://192.168.199.126:8080/src/assets/data/all-films.json?t=' + time,
-				seriesUrl = 'http://192.168.199.126:8080/src/assets/data/all-series.json?t=' + time;
+				const axios = require('axios');
 
-				function getFilms() {
-					return axios.get(filmsUrl, {timeout: 5000});
-				}
-
-				function getSeries() {
-					return axios.get(seriesUrl, {timeout: 5000});
-				}
-
-				axios.all([getFilms(), getSeries()])
+				axios.all([allData.getFilms(), allData.getSeries()])
 				.then(axios.spread(function (resFilms, resSeries) {
-					vm.clearTags();
-					vm.hideSearch();
+					app.clearTags();
+					app.hideSearch();
 					console.log('getRes:', resFilms, resSeries);
-					vm.films = resFilms.data;
-					console.log('getFilms:', vm.films);
-					vm.series = resSeries.data;
-					console.log('getSeries:', vm.series);
-					vm.isReload = false;
-					vm.isSuccess = true;
+					app.films = resFilms.data;
+					console.log('getFilms:', app.films);
+					app.series = resSeries.data;
+					console.log('getSeries:', app.series);
+					app.isReload = false;
+					app.isSuccess = true;
 					setTimeout(function () {
-						vm.showStatus = false;
+						app.showStatus = false;
 					}, 1500);
 				}))
 				.catch(function (error) {
 					console.warn('catchError:', error);
-					vm.isReload = false;
-					vm.isError = true;
-					vm.showStatus = true;
+					app.isReload = false;
+					app.isError = true;
+					app.showStatus = true;
 				})
 				.then(function () {
-					console.log('finalData:', vm.films, vm.series);
+					console.log('finalData:', app.films, app.series);
 				});
 			},
 			// 清空所有选中的标签
@@ -630,15 +622,15 @@
 				this.isError = false;
 				this.showStatus = true;
 				setTimeout(function () {
-					vm.loadData();
+					app.loadData();
 				}, 1000);
 			},
 			// 点击保存1s后显示提示信息，显示1s后消失
 			onSave() {
 				setTimeout(function () {
-					vm.showSaved = true;
+					app.showSaved = true;
 					setTimeout(function () {
-						vm.showSaved = false;
+						app.showSaved = false;
 					}, 2000);
 				}, 1000);
 			},
@@ -659,7 +651,7 @@
 				if (scrollTop > 0) {
 					this.isReload = true;
 					setTimeout(function () {
-						vm.loadData();
+						app.loadData();
 					}, 1000);
 				} else {
 					this.pullReload();

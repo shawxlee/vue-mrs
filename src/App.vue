@@ -1,13 +1,10 @@
 <template>
   <div id="app">
     <router-view/>
-    <transition name="slide-left">
-      <router-view name=""/>
-    </transition>
 
     <ul class="nav nav-justified border-top fixed-bottom footer">
       <li class="nav-item">
-        <router-link class="nav-link router-link-active" to="/all" exact><i class="fas fa-star"></i><br>全部</router-link>
+        <router-link class="nav-link" to="/all"><i class="fas fa-star"></i><br>全部</router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" to="/watch"><i class="fas fa-play-circle"></i><br>待看</router-link>
@@ -16,18 +13,22 @@
         <router-link class="nav-link" to="/review"><i class="fas fa-poll-h"></i><br>回顾</router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/setting"><i class="fas fa-cog"></i><br>设置</router-link>
+        <v-touch class="nav-link" :class="{active: showSetting}" @tap="showSetting = !showSetting"><i class="fas fa-cog"></i><br>设置</v-touch>
       </li>
     </ul>
+
+    <transition name="slide-left">
+      <Setting v-show="showSetting"/>
+    </transition>
   </div>
 </template>
 
 <script>
-  import SettingBar from './components/SettingBar.vue'
+  import Setting from './components/Setting.vue'
 
   export default {
     components: {
-      SettingBar
+      Setting
     },
     data() {
       return {
