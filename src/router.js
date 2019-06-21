@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import All from './views/All.vue'    // 先调用主页
+import Setting from './components/Setting.vue'    // 以及侧边栏
 
 Vue.use(Router)
 
@@ -11,7 +12,10 @@ export default new Router({
     {
       path: '/all',
       name: 'all',
-      component: All
+      component: {
+        default: All,
+        setting: Setting
+      }
     },
     {
       path: '/watch',
@@ -22,6 +26,11 @@ export default new Router({
       path: '/review',
       name: 'review',
       component: () => import('./views/Review.vue')    // 懒加载第3页
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: Setting
     }
   ]
 })

@@ -1,31 +1,11 @@
 <template>
 	<div id="review">
-		<!-- 顶部标题栏 -->
-		<title-bar :class="{'header-up': headerHidden}" id="review-header">
-			我的回顾
-		</title-bar>
+		review
 	</div>
 </template>
 
 <script>
-	import TitleBar from '@/components/TitleBar.vue'
-
 	export default {
-		name: 'review',
-		components: {
-			TitleBar
-		}
+		name: 'review'
 	}
 </script>
-
-<style>
-/* 顶部标题栏 */
-#review-header {
-	height: 3rem;
-	color: white;
-	background-color: #4f94cd;
-}
-.header-up {
-	top: -2.5rem;
-}
-</style>
