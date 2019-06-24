@@ -73,7 +73,7 @@ body {
 /*  局部样式  */
 
 /* 顶部导航栏 */
-#all-header {
+.header {
 	height: 3rem;
 	color: white;
 	background-color: #4f94cd;
@@ -81,17 +81,17 @@ body {
 .header-up {
 	top: -2.5rem;
 }
-#all-header .nav-link {
+.header .nav-link {
 	height: 1.5rem;
 	padding-top: .3rem;
 	font-size: .9rem;
 	line-height: 1;
 	color: #a9a9a9;
 }
-#all-header .active {
+.header .nav-link.active {
 	color: white;
 	border-bottom: .1rem solid white; 
-	background-color: transparent;
+	background-color: #4f94cd;
 }
 
 /* 工具栏 */
@@ -158,7 +158,7 @@ body {
 .toolbar-toggler .navbar-toggler {
 	color: #4f94cd;
 }
-.toolbar-toggler .active {
+.toolbar-toggler .navbar-toggler.active {
 	color: #1c1c1c;
 }
 /* 筛选面板 */
@@ -179,7 +179,7 @@ body {
 	margin-left: .05rem;
 	margin-right: .15rem;
 }
-#screen-collapse .active {
+#screen-collapse .btn.active {
 	color: white;
 }
 #screen-collapse .active .disabled {
@@ -662,9 +662,9 @@ body {
 	font-size: .8rem;
 	color: #a9a9a9;
 }
+.footer .nav-link.active {
+	color: #4f94cd;
+}
 .footer .nav-link i {
 	font-size: 1.5rem;
-}
-.footer .active {
-	color: #4f94cd;
 }

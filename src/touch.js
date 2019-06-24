@@ -7,5 +7,5 @@ VueTouch.config.swipe = {
 }
 
 export default {
-	name: 'v-touch'
+  name: 'v-touch'
 }

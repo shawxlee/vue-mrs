@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	export default {
-		name: 'to-watch'
-	}
+export default {
+  name: 'ToWatch'
+}
 </script>

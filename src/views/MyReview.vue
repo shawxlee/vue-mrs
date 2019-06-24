@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	export default {
-		name: 'my-review'
-	}
+export default {
+  name: 'MyReview'
+}
 </script>

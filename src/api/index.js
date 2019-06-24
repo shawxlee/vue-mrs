@@ -1,14 +1,16 @@
 import axios from 'axios'
 
-var baseURL = 'http://192.168.199.126:8080',
-time = new Date().getTime(),
-getData = {
-	getFilms() {
-		return axios.get(baseURL + '/data/all-rcmd-films.json?t=' + time, {timeout: 5000})
-	},
-	getSeries() {
-		return axios.get(baseURL + '/data/all-rcmd-series.json?t=' + time, {timeout: 5000})
-	}
+axios.defaults.baseURL = 'http://192.168.199.126:8080'
+axios.defaults.timeout = 5000
+
+var time = new Date().getTime()
+var getData = {
+  getFilms () {
+    return axios.get('/data/all-rcmd-films.json?t=' + time)
+  },
+  getSeries () {
+    return axios.get('/data/all-rcmd-series.json?t=' + time)
+  }
 }
 
 export default getData
