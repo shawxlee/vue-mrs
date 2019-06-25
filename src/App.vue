@@ -4,7 +4,7 @@
       <router-view v-if="$route.meta.keepAlive"/>
     </keep-alive>
 
-    <ul class="nav nav-justified border-top fixed-bottom footer">
+    <ul class="nav nav-justified fixed-bottom border-top footer">
       <li class="nav-item">
         <router-link class="nav-link" to="/all-rcmd"><i class="fas fa-star"></i><br>推荐</router-link>
       </li>

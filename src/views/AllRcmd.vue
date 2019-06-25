@@ -1,24 +1,15 @@
 <template>
-	<div class="container-fluid p-0">
+	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
-		<nav class="navbar navbar-expand-lg border-bottom fixed-top header" :class="{'header-up': headerHidden}" @click.passive="onFold">
-			<span class="navbar-text mb-0 h4">全部影片</span>
-			<!-- 模式切换 -->
-			<ul class="nav nav-pills">
-				<li class="nav-item ml-3">
-					<a class="nav-link rounded-0 px-0 active" data-toggle="pill" href="#full-mode">全览模式</a>
-				</li>
-				<li class="nav-item ml-3">
-					<a class="nav-link rounded-0 px-0" data-toggle="pill" href="#mini-mode">简约模式</a>
-				</li>
-				<li class="nav-item ml-3">
-					<a class="nav-link rounded-0 px-0" data-toggle="pill" href="#series-mode">系列模式</a>
-				</li>
-			</ul>
-		</nav>
+		<FullHeader pageTitle="全部影片" :class="{hide: headerHidden}" @click.passive="onFold">
+			<FullHeaderBtn modeId="#full-mode" modeName="全览模式" isActive="true"/>
+			<FullHeaderBtn modeId="#mini-mode" modeName="简约模式"/>
+			<FullHeaderBtn modeId="#series-mode" modeName="系列模式"/>
+		</FullHeader>
+		<MiniHeader pageTitle="全部影片" :class="{show: headerHidden}" @click.passive="onFold"/>
 
 		<!-- 工具栏 -->
-		<nav class="navbar navbar-expand-lg border-bottom toolbar" :class="{'toolbar-up': headerHidden}">
+		<nav class="navbar navbar-expand-lg fixed-top border-bottom toolbar" :class="{hide: headerHidden}">
 			<!-- 筛选器 -->
 			<div class="toolbar-toggler" data-toggle="collapse" data-target="#screen-collapse">
 				<button class="navbar-toggler pl-0 pr-1" :class="{active: !screenHidden}" type="button">
@@ -62,10 +53,10 @@
 						<v-touch class="btn btn-sm" :class="{active: item.isActive}" @tap="onTag(item)">{{ item.tag }}</v-touch>
 					</div>
 					<div class="col-2 p-1" v-if="moreHidden">
-						<v-touch class="btn btn-sm more" @tap="moreHidden = false">更多</v-touch>
+						<v-touch class="btn btn-sm btn-more" @tap="moreHidden = false">更多</v-touch>
 					</div>
 					<div class="w-100 mt-1 text-center">
-						<v-touch class="navbar-toggler" :class="{show: activeTags.length > 0}" @tap="clearTags">
+						<v-touch class="navbar-toggler" :class="{invisible: activeTags.length == 0}" @tap="clearTags">
 							<i class="fas fa-times-circle mt-1"></i> 清空标签
 						</v-touch>
 					</div>
@@ -106,7 +97,7 @@
 								<br><br>
 								<a class="btn mb-1" :href="baseUrl + item.posterUrl" :download="item.transName" @click.passive="onSave">保存图片</a>
 								<br>
-								<p :class="{show: showSaved}">图片 <span>{{ item.transName }}</span> 已保存到手机相册</p>
+								<p :class="{invisible: saveHidden}">图片 <span>{{ item.transName }}</span> 已保存到手机相册</p>
 							</div>
 						</div>
 						<!-- 信息 -->
@@ -137,7 +128,7 @@
 					</div>
 					<!-- 评语 -->
 					<div class="d-flex mt-2 px-2 film-card-comment">
-						<p><i class="fas fa-comment-dots mr-2"></i></p>
+						<p><i class="fas fa-comment-dots mr-1"></i></p>
 						<p>{{ item.comment }}</p>
 					</div>
 					<!-- 选项 -->
@@ -160,7 +151,7 @@
 						<v-touch class="option mx-3" @tap="onOption(4)">
 							<a class="btn px-0"><i class="fas fa-pen"></i></a>
 							<br>
-							撰写长评
+							撰写影评
 						</v-touch>
 					</div>
 				</v-touch>
@@ -196,7 +187,7 @@
 									<br><br>
 									<a class="btn mb-1" :href="baseUrl + item.posterUrl" :download="item.transName" @click.passive="onSave">保存图片</a>
 									<br>
-									<p :class="{show: showSaved}">图片 <span>{{ item.transName }}</span> 已保存到手机相册</p>
+									<p :class="{invisible: saveHidden}">图片 <span>{{ item.transName }}</span> 已保存到手机相册</p>
 								</div>
 							</div>
 							<!-- 信息 -->
@@ -214,36 +205,34 @@
 									<p>主演：</p>
 									<p>{{ item.star }}</p>
 								</div>
-								<div class="film-card-comment mt-2 pl-2">
-									<i class="fas fa-comment-dots mr-2"></i>{{ item.comment }}
+								<div class="film-card-comment mt-2 px-2">
+									<i class="fas fa-comment-dots mr-1"></i>{{ item.comment }}
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- 选项 -->
-					<div class="film-card-options" v-if="filmOrder === item.id">
-						<div class="row no-gutters">
-							<v-touch class="col-3 p-auto" @tap="onOption(1)">
-								<a class="btn px-0"><i class="fas fa-plus"></i></a>
-								<br>
-								加入待看
-							</v-touch>
-							<v-touch class="col-3 p-auto" @tap="onOption(2)">
-								<a class="btn px-0"><i class="fas fa-check"></i></a>
-								<br>
-								标记已看
-							</v-touch>
-							<v-touch class="col-3 p-auto" @tap="onOption(3)">
-								<a class="btn px-0"><i class="fas fa-thumbtack"></i></a>
-								<br>
-								添加笔记
-							</v-touch>
-							<v-touch class="col-3 p-auto" @tap="onOption(4)">
-								<a class="btn px-0"><i class="fas fa-pen"></i></a>
-								<br>
-								撰写长评
-							</v-touch>
-						</div>
+					<div class="d-flex justify-content-center film-card-options" v-if="filmOrder === item.id">
+						<v-touch class="option mx-3" @tap="onOption(1)">
+							<a class="btn px-0"><i class="fas fa-plus"></i></a>
+							<br>
+							加入待看
+						</v-touch>
+						<v-touch class="option mx-3" @tap="onOption(2)">
+							<a class="btn px-0"><i class="fas fa-check"></i></a>
+							<br>
+							标记已看
+						</v-touch>
+						<v-touch class="option mx-3" @tap="onOption(3)">
+							<a class="btn px-0"><i class="fas fa-thumbtack"></i></a>
+							<br>
+							添加笔记
+						</v-touch>
+						<v-touch class="option mx-3" @tap="onOption(4)">
+							<a class="btn px-0"><i class="fas fa-pen"></i></a>
+							<br>
+							撰写影评
+						</v-touch>
 					</div>
 				</v-touch>
 				<!-- 底部分割线 -->
@@ -262,11 +251,11 @@
 				<div class="row no-gutters">
 					<div class="col-4">
 						<!-- 导航 -->
-						<div class="list-group border-right" :class="{'series-up': headerHidden}" id="series-nav">
+						<div class="list-group border-right" id="series-nav">
 							<a class="list-group-item list-group-item-action p-2 rounded-0 border-left-0 border-right-0" :href="'#series_' + item.seriesId" v-for="item in filterSeries" :key="'filterSeries_' + item.seriesId">
 								<!-- 有系列 -->
 								<template v-if="item.filmList.length > 1">
-									<span><i class="fas fa-caret-right"></i> {{ item.seriesName }}</span> <span class="badge badge-pill">{{ item.filmList.length }}</span>
+									<span><i class="fas fa-caret-right"></i> {{ item.seriesName }}</span>&nbsp;<span class="badge badge-pill">{{ item.filmList.length }}</span>
 									<br>
 									{{ item.firstYear }} - {{ item.filmList[item.filmList.length - 1].year }}
 									<br>
@@ -298,18 +287,34 @@
 										<!-- 编号 -->
 										<span class="badge rounded-0"><span>No.</span>{{ index + 1 }}</span>
 										<!-- 选项 -->
-										<div class="film-card-options" v-if="filmOrder === film.id">
-											<v-touch class="option my-3" @tap="onOption(1)">
-												<a class="btn px-0 mr-2"><i class="fas fa-plus"></i></a>加入待看
+										<div class="d-flex justify-content-center flex-wrap film-card-options" v-if="filmOrder === film.id">
+											<v-touch class="option mx-2" @tap="onOption(1)">
+												<a class="btn px-0"><i class="fas fa-plus"></i></a>
+												<br>
+												加入
+												<br>
+												待看
 											</v-touch>
-											<v-touch class="option my-3" @tap="onOption(2)">
-												<a class="btn px-0 mr-2"><i class="fas fa-check"></i></a>标记已看
+											<v-touch class="option mx-2" @tap="onOption(2)">
+												<a class="btn px-0"><i class="fas fa-check"></i></a>
+												<br>
+												标记
+												<br>
+												已看
 											</v-touch>
-											<v-touch class="option my-3" @tap="onOption(3)">
-												<a class="btn px-0 mr-2"><i class="fas fa-thumbtack"></i></a>添加笔记
+											<v-touch class="option mx-2" @tap="onOption(3)">
+												<a class="btn px-0"><i class="fas fa-thumbtack"></i></a>
+												<br>
+												添加
+												<br>
+												笔记
 											</v-touch>
-											<v-touch class="option my-3" @tap="onOption(4)">
-												<a class="btn px-0 mr-2"><i class="fas fa-pen"></i></a>撰写长评
+											<v-touch class="option mx-2" @tap="onOption(4)">
+												<a class="btn px-0"><i class="fas fa-pen"></i></a>
+												<br>
+												撰写
+												<br>
+												影评
 											</v-touch>
 										</div>
 
@@ -339,7 +344,7 @@
 												<div class="film-card-poster-large px-3 mb-1" v-show="showPoster" @click.self="detailOrder = 0">
 													<a class="btn mb-1" :href="baseUrl + film.posterUrl" :download="film.transName" @click.passive="onSave">保存图片</a>
 													<br>
-													<p :class="{show: showSaved}">图片 <span>{{ film.transName }}</span> 已保存到手机相册</p>
+													<p :class="{invisible: saveHidden}">图片 <span>{{ film.transName }}</span> 已保存到手机相册</p>
 												</div>
 											</div>
 										</transition>
@@ -385,10 +390,17 @@
 	import $ from 'jquery'
 	import axios from 'axios'
 	import getData from '../api/index'
+	import FullHeader from '../components/FullHeader'
+	import FullHeaderBtn from '../components/FullHeaderBtn'
+	import MiniHeader from '../components/MiniHeader'
 
 	export default {
 		name: 'AllRcmd',
-		components: {},
+		components: {
+			FullHeader,
+			FullHeaderBtn,
+			MiniHeader
+		},
 		directives: {
     // 自定义指令：元素自动获得焦点
     focus: {
@@ -537,7 +549,7 @@ data () {
 		isSuccess: false,
 		isError: false,
 		baseUrl: axios.defaults.baseURL,
-		showSaved: false,
+		saveHidden: true,
 		filmOrder: 0,
 		posterOrder: 0,
 		detailOrder: 0,
@@ -690,9 +702,9 @@ created () {
     this.loadData()
 },
 mounted () {
-	var self = this
     // jquery脚本
     var screenCollapse = $('#screen-collapse')
+    var self = this
     // 筛选面板展开时按钮变色、隐藏筛选信息
     screenCollapse.on('show.bs.collapse', function () {
     	self.screenHidden = false
@@ -848,9 +860,9 @@ methods: {
     onSave () {
     	var self = this
     	setTimeout(function () {
-    		self.showSaved = true
+    		self.saveHidden = false
     		setTimeout(function () {
-    			self.showSaved = false
+    			self.saveHidden = true
     		}, 2000)
     	}, 1000)
     },
