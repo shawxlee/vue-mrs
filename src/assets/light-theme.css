@@ -349,13 +349,11 @@ body {
 	left: 0;
 	background-color: rgba(0,0,0,.5);
 }
-.film-card-options .option {
-	margin: auto;
+.film-card-options .col-3 {
 	font-size: .8rem;
-	text-align: center;
 	color: white;
 }
-.film-card-options .option .btn {
+.film-card-options .btn {
 	width: 2.5rem;
 	height: 2.5rem;
 	margin-bottom: .25rem;
@@ -366,7 +364,7 @@ body {
 	border: none;
 	border-radius: 50%;
 }
-.film-card-options .option:last-of-type .btn {
+.film-card-options .col-3:last-of-type .btn {
 	padding-top: .675rem;
 	font-size: 1.15rem;
 }
