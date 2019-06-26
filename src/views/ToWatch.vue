@@ -11,19 +11,19 @@
 </template>
 
 <script>
-	import FullHeader from '../components/FullHeader'
-	import MiniHeader from '../components/MiniHeader'
+import FullHeader from '../components/FullHeader'
+import MiniHeader from '../components/MiniHeader'
 
-	export default {
-		name: 'ToWatch',
-		components: {
-			FullHeader,
-			MiniHeader
-		},
-		data () {
-			return {
-				showHeader: true
-			}
-		}
-	}
+export default {
+  name: 'ToWatch',
+  components: {
+    FullHeader,
+    MiniHeader
+  },
+  data () {
+    return {
+      showHeader: true
+    }
+  }
+}
 </script>

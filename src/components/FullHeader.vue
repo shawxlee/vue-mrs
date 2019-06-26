@@ -9,13 +9,13 @@
 </template>
 
 <script>
-	export default {
-		name: 'FullHeader',
-		props: {
-			pageTitle: {
-				type: String,
-				required: true
-			}
-		}
-	}
+export default {
+  name: 'FullHeader',
+  props: {
+    pageTitle: {
+      type: String,
+      required: true
+    }
+  }
+}
 </script>

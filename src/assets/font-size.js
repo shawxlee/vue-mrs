@@ -4,7 +4,6 @@
   var docElem = doc.documentElement
 
   var vpMeta = doc.querySelector('meta[name="viewport"]')
-  var flexMeta = doc.querySelector('meta[name="flexible"]')
 
   var dpr = 0
   var scale = 0
@@ -13,51 +12,12 @@
 
   // 设置了 viewport meta
   if (vpMeta) {
-    var initial = vpMeta.getAttribute('content').match(/initial\-scale=([\d\.]+)/)
+    var initial = vpMeta.getAttribute('content').match(/initial-scale=([\d.]+)/)
 
     if (initial) {
       scale = parseFloat(initial[1]) // 已设置的 initialScale
       dpr = parseInt(1 / scale) // 设备像素比 devicePixelRatio
     }
-  }
-  // 设置了 flexible Meta
-  else if (flexMeta) {
-    var flexMetaContent = flexMeta.getAttribute('content')
-    if (flexMetaContent) {
-      var initial = flexMetaContent.match(/initial\-dpr=([\d\.]+)/)
-      var maximum = flexMetaContent.match(/maximum\-dpr=([\d\.]+)/)
-
-      if (initial) {
-        dpr = parseFloat(initial[1])
-        scale = parseFloat((1 / dpr).toFixed(2))
-      }
-
-      if (maximum) {
-        dpr = parseFloat(maximum[1])
-        scale = parseFloat((1 / dpr).toFixed(2))
-      }
-    }
-  }
-
-  // viewport 或 flexible
-  // meta 均未设置
-  if (!dpr && !scale) {
-    // QST
-    // 这里的 第一句有什么用 ?
-    // 和 Android 有毛关系 ?
-    var u = (win.navigator.appVersion.match(/android/gi), win.navigator.appVersion.match(/iphone/gi))
-    var _dpr = win.devicePixelRatio
-
-    // 所以这里似乎是将所有 Android 设备都设置为 1 了
-    dpr = u ? ((_dpr >= 3 && (!dpr || dpr >= 3))
-      ? 3
-      : (_dpr >= 2 && (!dpr || dpr >= 2))
-        ? 2
-        : 1
-    )
-      : 1
-
-    scale = 1 / dpr
   }
 
   docElem.setAttribute('data-dpr', dpr)

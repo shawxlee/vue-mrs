@@ -5,12 +5,12 @@
 </template>
 
 <script>
-	export default {
-		name: 'FullHeaderBtn',
-		props: {
-			isActive: Boolean,
-			modeId: String,
-			modeName: String
-		}
-	}
+export default {
+  name: 'FullHeaderBtn',
+  props: {
+    isActive: Boolean,
+    modeId: String,
+    modeName: String
+  }
+}
 </script>

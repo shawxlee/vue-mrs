@@ -5,13 +5,13 @@
 </template>
 
 <script>
-	export default {
-		name: 'MiniHeader',
-		props: {
-			pageTitle: {
-				type: String,
-				required: true
-			}
-		}
-	}
+export default {
+  name: 'MiniHeader',
+  props: {
+    pageTitle: {
+      type: String,
+      required: true
+    }
+  }
+}
 </script>

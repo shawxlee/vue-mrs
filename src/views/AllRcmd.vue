@@ -387,177 +387,177 @@
 </template>
 
 <script>
-	import $ from 'jquery'
-	import axios from 'axios'
-	import getData from '../api/index'
-	import FullHeader from '../components/FullHeader'
-	import FullHeaderBtn from '../components/FullHeaderBtn'
-	import MiniHeader from '../components/MiniHeader'
+import $ from 'jquery'
+import axios from 'axios'
+import getData from '../api/index'
+import FullHeader from '../components/FullHeader'
+import FullHeaderBtn from '../components/FullHeaderBtn'
+import MiniHeader from '../components/MiniHeader'
 
-	export default {
-		name: 'AllRcmd',
-		components: {
-			FullHeader,
-			FullHeaderBtn,
-			MiniHeader
-		},
-		directives: {
+export default {
+  name: 'AllRcmd',
+  components: {
+    FullHeader,
+    FullHeaderBtn,
+    MiniHeader
+  },
+  directives: {
     // 自定义指令：元素自动获得焦点
     focus: {
     	inserted (el) {
     		el.focus()
     	}
     }
-},
-data () {
-	return {
-		films: [],
-		series: [],
-		headerHidden: false,
-		screenHidden: true,
-		sortOrder: 1,
-		isReverse: false,
-		activeTags: [],
-		showSearch: false,
-		isFocus: false,
-		searchText: '',
-		sorts: ['年份', '评分', '更新'],
-		tags: [
-		{
-			tag: '变异',
-			isActive: false
-		},
-		{
-			tag: '病毒',
-			isActive: false
-		},
-		{
-			tag: '穿越',
-			isActive: false
-		},
-		{
-			tag: '怪物',
-			isActive: false
-		},
-		{
-			tag: '基因',
-			isActive: false
-		},
-		{
-			tag: '末日',
-			isActive: false
-		},
-		{
-			tag: '奇幻',
-			isActive: false
-		},
-		{
-			tag: '烧脑',
-			isActive: false
-		},
-		{
-			tag: '神话',
-			isActive: false
-		},
-		{
-			tag: '太空',
-			isActive: false
-		},
-		{
-			tag: '探险',
-			isActive: false
-		},
-		{
-			tag: '逃生',
-			isActive: false
-		},
-		{
-			tag: '外星',
-			isActive: false
-		},
-		{
-			tag: '未来',
-			isActive: false
-		},
-		{
-			tag: '灾难',
-			isActive: false
-		},
-		{
-			tag: '哲学',
-			isActive: false
-		},
-		{
-			tag: '罪案',
-			isActive: false
-		},
-		{
-			tag: '爱情',
-			isActive: false
-		},
-		{
-			tag: '惊悚',
-			isActive: false
-		},
-		{
-			tag: '历史',
-			isActive: false
-		},
-		{
-			tag: '魔鬼',
-			isActive: false
-		},
-		{
-			tag: '人性',
-			isActive: false
-		},
-		{
-			tag: '丧尸',
-			isActive: false
-		},
-		{
-			tag: '同性',
-			isActive: false
-		},
-		{
-			tag: '无限',
-			isActive: false
-		},
-		{
-			tag: '血腥',
-			isActive: false
-		},
-		{
-			tag: '战争',
-			isActive: false
-		},
-		{
-			tag: '致郁',
-			isActive: false
-		},
-		{
-			tag: '重口',
-			isActive: false
-		},
-		{
-			tag: '宗教',
-			isActive: false
-		}
-		],
-		moreHidden: true,
-		showStatus: false,
-		isSuccess: false,
-		isError: false,
-		baseUrl: axios.defaults.baseURL,
-		saveHidden: true,
-		filmOrder: 0,
-		posterOrder: 0,
-		detailOrder: 0,
-		showPoster: false,
-		isReload: false
-	}
-},
-computed: {
+  },
+  data () {
+    return {
+      films: [],
+      series: [],
+      headerHidden: false,
+      screenHidden: true,
+      sortOrder: 1,
+      isReverse: false,
+      activeTags: [],
+      showSearch: false,
+      isFocus: false,
+      searchText: '',
+      sorts: ['年份', '评分', '更新'],
+      tags: [
+        {
+          tag: '变异',
+          isActive: false
+        },
+        {
+          tag: '病毒',
+          isActive: false
+        },
+        {
+          tag: '穿越',
+          isActive: false
+        },
+        {
+          tag: '怪物',
+          isActive: false
+        },
+        {
+          tag: '基因',
+          isActive: false
+        },
+        {
+          tag: '末日',
+          isActive: false
+        },
+        {
+          tag: '奇幻',
+          isActive: false
+        },
+        {
+          tag: '烧脑',
+          isActive: false
+        },
+        {
+          tag: '神话',
+          isActive: false
+        },
+        {
+          tag: '太空',
+          isActive: false
+        },
+        {
+          tag: '探险',
+          isActive: false
+        },
+        {
+          tag: '逃生',
+          isActive: false
+        },
+        {
+          tag: '外星',
+          isActive: false
+        },
+        {
+          tag: '未来',
+          isActive: false
+        },
+        {
+          tag: '灾难',
+          isActive: false
+        },
+        {
+          tag: '哲学',
+          isActive: false
+        },
+        {
+          tag: '罪案',
+          isActive: false
+        },
+        {
+          tag: '爱情',
+          isActive: false
+        },
+        {
+          tag: '惊悚',
+          isActive: false
+        },
+        {
+          tag: '历史',
+          isActive: false
+        },
+        {
+          tag: '魔鬼',
+          isActive: false
+        },
+        {
+          tag: '人性',
+          isActive: false
+        },
+        {
+          tag: '丧尸',
+          isActive: false
+        },
+        {
+          tag: '同性',
+          isActive: false
+        },
+        {
+          tag: '无限',
+          isActive: false
+        },
+        {
+          tag: '血腥',
+          isActive: false
+        },
+        {
+          tag: '战争',
+          isActive: false
+        },
+        {
+          tag: '致郁',
+          isActive: false
+        },
+        {
+          tag: '重口',
+          isActive: false
+        },
+        {
+          tag: '宗教',
+          isActive: false
+        }
+      ],
+      moreHidden: true,
+      showStatus: false,
+      isSuccess: false,
+      isError: false,
+      baseUrl: axios.defaults.baseURL,
+      saveHidden: true,
+      filmOrder: 0,
+      posterOrder: 0,
+      detailOrder: 0,
+      showPoster: false,
+      isReload: false
+    }
+  },
+  computed: {
     // 标签过滤：默认只显示前17个，点击“更多”后全部显示
     filterTags () {
     	var moreHidden = this.moreHidden
@@ -606,7 +606,7 @@ computed: {
           		return true
           	}
           }
-      } else if (searchText.length > 0) {
+        } else if (searchText.length > 0) {
           // 搜索：将搜索文本按空格分割为关键词，清除数据文本的所有标点符号，返回包含至少一个关键词的所有项
           var stArr = searchText.split(' ')
           var keys = [item.transName, item.year, item.offiName, item.country, item.type, item.director, item.star, item.comment]
@@ -619,10 +619,10 @@ computed: {
           		}
           	}
           }
-      } else {
+        } else {
       	return true
-      }
-  })
+        }
+      })
     },
     // 系列排序：年份/评分/更新
     sortSeries () {
@@ -664,7 +664,7 @@ computed: {
           		}
           	}
           }
-      } else if (searchText.length > 0) {
+        } else if (searchText.length > 0) {
           // 搜索：将搜索文本按空格分割为关键词，清除数据文本的所有标点符号，返回包含至少一个关键词的所有项
           var stArr = searchText.split(' ')
 
@@ -679,13 +679,13 @@ computed: {
           		}
           	}
           }
-      } else {
+        } else {
       	return true
-      }
-  })
+        }
+      })
     }
-},
-watch: {
+  },
+  watch: {
     // 排序方式变化时复位倒序属性
     sortOrder () {
     	this.isReverse = false
@@ -696,12 +696,12 @@ watch: {
     		this.showPoster = false
     	}
     }
-},
-created () {
+  },
+  created () {
     // 初始化数据
     this.loadData()
-},
-mounted () {
+  },
+  mounted () {
     // jquery脚本
     var screenCollapse = $('#screen-collapse')
     var self = this
@@ -748,8 +748,8 @@ mounted () {
     		toBottom.fadeIn()
     	}
     })
-},
-methods: {
+  },
+  methods: {
     // 加载数据并显示状态：若成功则清除筛选信息，然后收起状态栏；否则显示错误提示
     loadData () {
     	var self = this
@@ -905,6 +905,6 @@ methods: {
     	var snHeight = $('#series-nav').height()
     	$('#series-nav').animate({ scrollTop: snHeight }, 300, 'linear')
     }
-}
+  }
 }
 </script>
