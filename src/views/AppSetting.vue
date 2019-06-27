@@ -1,28 +1,29 @@
 <template>
 	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
-		<transition name="toggle">
-			<keep-alive>
-				<FullHeader pageTitle="应用设置" v-if="showHeader"/>
-				<MiniHeader pageTitle="应用设置" v-else/>
-			</keep-alive>
-		</transition>
+    <BaseHeader class="header" :class="{upward: headerHidden}">
+      <BaseHeaderTitle :class="{'d-none': headerHidden}" pageTitle="应用设置"/>
+      <!-- 小标题 -->
+      <transition name="fade">
+        <BaseHeaderTitle class="header-min" v-if="headerHidden" pageTitle="应用设置"/>
+      </transition>
+    </BaseHeader>
 	</div>
 </template>
 
 <script>
-import FullHeader from '../components/FullHeader'
-import MiniHeader from '../components/MiniHeader'
+import BaseHeader from '../components/BaseHeader'
+import BaseHeaderTitle from '../components/BaseHeaderTitle'
 
 export default {
   name: 'AppSetting',
   components: {
-    FullHeader,
-    MiniHeader
+    BaseHeader,
+    BaseHeaderTitle
   },
   data () {
     return {
-      showHeader: true
+      headerHidden: false
     }
   }
 }

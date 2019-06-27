@@ -75,51 +75,57 @@ body {
 /*  局部样式  */
 
 /* 顶部导航栏 */
-.full-header {
+.header {
 	height: 3rem;
 	color: white;
 	background-color: #4f94cd;
-	transition: transform .2s linear;
+	transition: transform .15s linear;
 }
-.hide {
+.upward {
 	transform: translateY(-1.75rem);
 }
-.full-header .nav-link {
+.header .nav-link {
 	height: 1.5rem;
 	padding: 0;
 	padding-top: .3rem;
 	font-size: .9rem;
 	line-height: 1;
 	color: #a9a9a9;
-	border-radius: 0;
 }
-.full-header .nav-link.active {
+.header .nav-link.active {
 	color: white;
 	border-bottom: .1rem solid white;
 	background-color: transparent;
 }
-.mini-header {
-	height: 1.25rem;
-	color: white;
-	background-color: #4f94cd;
-	opacity: 0;
-	transition: opacity .2s linear .2s;
+/* 收缩导航栏 */
+.header-min {
+	display: inline-block;
+	width: 100%;
+	font-size: .75rem;
+	text-align: center;
+	transform: translateY(.9rem);
 }
-.show {
+/* 过渡：显示/隐藏 */
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
+}
+.fade-enter-to,
+.fade-leave {
 	opacity: 1;
 }
-.mini-header .nav-item {
-	height: 100%;
-	padding-top: .25rem;
-	font-size: .75rem;
-	line-height: 1;
+.fade-enter-active {
+	transition: opacity .15s linear;
+}
+.fade-leave-active {
+	transition: all 0 ease 0;
 }
 
 /* 工具栏 */
 .toolbar {
 	top: 3rem;
 	background-color: white;
-	transition: transform .2s linear;
+	transition: transform .15s linear;
 }
 /* 搜索框 */
 .toolbar-form {
@@ -135,7 +141,7 @@ body {
 	top: .2375rem;
 	right: 1rem;
 	width: 100%;
-	transition: width .2s linear;
+	transition: width .15s linear;
 }
 .toolbar-form .navbar-toggler {
 	position: absolute;
@@ -170,6 +176,8 @@ body {
 	color: #4f94cd;
 }
 .toolbar-toggler .navbar-toggler {
+	padding-left: 0;
+	padding-right: .25rem;
 	color: #4f94cd;
 }
 .toolbar-toggler .navbar-toggler.active {
@@ -190,7 +198,6 @@ body {
 	transform: rotate(90deg);
 }
 #screen-collapse .fa-caret-left {
-	margin-left: .05rem;
 	margin-right: .15rem;
 }
 #screen-collapse .btn.active {
@@ -291,7 +298,7 @@ body {
 	text-align: center;
 	color: #cfcfcf;
 	opacity: 0;
-	transition: opacity .2s linear;
+	transition: opacity .15s linear;
 }
 .film-card-poster-large span {
 	color: white;
@@ -432,6 +439,7 @@ body {
 	line-height: 1;
 }
 .accordion .film-card-comment {
+	width: calc(100% + .2rem);
 	height: 3.63rem;
 	padding-top: .35rem;
 	line-height: 1.5;
@@ -444,11 +452,11 @@ body {
 	top: 6rem;
 	left: 0;
 	width: 33.3%;
-	height: calc(100% - 9.8rem);
+	height: calc(100% - 8.05rem);
 	overflow-y: auto;
 	overflow-x: hidden;
 	background-color: white;
-	transition: all .2s linear;
+	transition: transform .15s linear;
 }
 .list-group-item {
 	width: calc(100% + 1px);
@@ -528,7 +536,7 @@ body {
 	bottom: calc(3.8rem + 1px);
 	left: 0;
 	z-index: 1050;
-	transition: all .2s linear;
+	transition: all .15s linear;
 }
 .detail-up {
 	top: 0;
@@ -550,7 +558,7 @@ body {
 }
 /* 底图 */
 .series-content-detail img {
-	transition: all .2s linear;
+	transition: all .15s linear;
 }
 .scale {
 	transform: scale(.92, .92);

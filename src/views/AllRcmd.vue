@@ -1,20 +1,25 @@
 <template>
 	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
-		<FullHeader pageTitle="全部影片" :class="{hide: headerHidden}" @click.passive="onFold">
-			<FullHeaderBtn modeId="#full-mode" modeName="全览模式" isActive="true"/>
-			<FullHeaderBtn modeId="#mini-mode" modeName="简约模式"/>
-			<FullHeaderBtn modeId="#series-mode" modeName="系列模式"/>
-		</FullHeader>
-		<MiniHeader pageTitle="全部影片" :class="{show: headerHidden}" @click.passive="onFold"/>
+		<BaseHeader class="header" :class="{upward: headerHidden}" @click.native.passive="onFold">
+			<BaseHeaderTitle :class="{'d-none': headerHidden}" pageTitle="全部推荐"/>
+			<!-- 切换模式 -->
+			<BaseHeaderNav :class="{'d-none': headerHidden}">
+				<BaseHeaderNavItem modeId="#full-mode" modeName="全览模式" modeActive/>
+				<BaseHeaderNavItem modeId="#mini-mode" modeName="简约模式"/>
+				<BaseHeaderNavItem modeId="#series-mode" modeName="系列模式"/>
+			</BaseHeaderNav>
+			<!-- 小标题 -->
+			<transition name="fade">
+				<BaseHeaderTitle class="header-min" v-if="headerHidden" pageTitle="全部推荐"/>
+			</transition>
+		</BaseHeader>
 
 		<!-- 工具栏 -->
-		<nav class="navbar navbar-expand-lg fixed-top border-bottom toolbar" :class="{hide: headerHidden}">
+		<BaseHeader class="toolbar" :class="{upward: headerHidden}">
 			<!-- 筛选器 -->
-			<div class="toolbar-toggler" data-toggle="collapse" data-target="#screen-collapse">
-				<button class="navbar-toggler pl-0 pr-1" :class="{active: !screenHidden}" type="button">
-					<i class="fas fa-sort-amount-down"></i>
-				</button>
+			<CollapseToggler class="toolbar-toggler" collapseId="#screen-collapse">
+				<IconBtn :class="{active: !screenHidden}" iconClass="fa-sort-amount-down"/>
 				<!-- 筛选信息 -->
 				<template v-if="screenHidden">
 					<span v-show="sortOrder === 1 && !isReverse">最早上映</span>
@@ -25,145 +30,99 @@
 					<span v-show="sortOrder === 3 && isReverse">最早更新</span>
 					<span v-for="(item, index) in activeTags" :key="'activeTag_' + index"> · {{ item }}</span>
 				</template>
-			</div>
+			</CollapseToggler>
 			<!-- 搜索框 -->
 			<form class="toolbar-form">
 				<transition name="stretch">
-					<input class="form-control rounded-pill" :style="[isFocus ? '' : {width: searchText.length + 4 + 'rem'}]" type="text" placeholder="输入关键词搜索" v-if="showSearch" id="search-input" v-model.trim="searchText" @focus.passive="isFocus = true" @blur.passive="isFocus = false" v-focus>
+					<SearchInput :style="[isFocus ? '' : {width: searchText.length + 4 + 'rem'}]" v-if="showSearch" v-model.trim="searchText" @focus.native.passive="isFocus = true" @blur.native.passive="isFocus = false"/>
 				</transition>
-				<button class="navbar-toggler" :class="{active: isFocus}" type="button" @mousedown.prevent @click.passive="onSearch">
-					<i class="fas fa-times-circle" v-if="searchText.length > 0" key="times-icon"></i>
-					<i class="fas fa-search" v-else key="search-icon"></i>
-				</button>
+				<IconBtn :class="{active: isFocus}" :iconClass="searchText.length > 0 ? 'fa-times-circle' : 'fa-search'" @mousedown.native.prevent @click.native.passive="onSearch"/>
 			</form>
 
 			<!-- 筛选面板 -->
-			<div class="collapse navbar-collapse px-1 pt-3 pb-1" id="screen-collapse">
+			<NavbarCollapse id="screen-collapse">
 				<div class="row no-gutters justify-content-between">
 					<!-- 排序按钮 -->
-					<div class="col-4 px-1" v-for="(item, index) in sorts" :key="'sort_' + index">
-						<v-touch class="btn btn-sm rounded-pill px-2" :class="{active: sortOrder === index + 1}" @tap="sortOrder = index + 1; isReverse = !isReverse">按{{ item }}排序<span>
-							<i class="fas fa-caret-left" :class="{disabled: !isReverse}"></i>
-							<i class="fas fa-caret-right" :class="{disabled: isReverse}"></i>
-						</span></v-touch>
+					<div class="col-4 px-1">
+						<SortBtn :class="{active: sortOrder === 1}" sortName="年份" :sortDisabled="isReverse" @click.native.passive="onSort(1)"/>
+					</div>
+					<div class="col-4 px-1">
+						<SortBtn :class="{active: sortOrder === 2}" sortName="评分" :sortDisabled="isReverse" @click.native.passive="onSort(2)"/>
+					</div>
+					<div class="col-4 px-1">
+						<SortBtn :class="{active: sortOrder === 3}" sortName="更新" :sortDisabled="isReverse" @click.native.passive="onSort(3)"/>
 					</div>
 					<div class="w-100"><hr></div>
 					<!-- 过滤标签 -->
 					<div class="col-2 p-1" v-for="(item, index) in filterTags" :key="'filterTag_' + index">
-						<v-touch class="btn btn-sm" :class="{active: item.isActive}" @tap="onTag(item)">{{ item.tag }}</v-touch>
+						<BaseBtnSm :class="{active: item.isActive}" :btnText="item.tag" @click.native.passive="onTag(item)"/>
 					</div>
 					<div class="col-2 p-1" v-if="moreHidden">
-						<v-touch class="btn btn-sm btn-more" @tap="moreHidden = false">更多</v-touch>
+						<BaseBtnSm class="btn-more" btnText="更多" @click.native.passive="moreHidden = false"/>
 					</div>
 					<div class="w-100 mt-1 text-center">
-						<v-touch class="navbar-toggler" :class="{invisible: activeTags.length == 0}" @tap="clearTags">
-							<i class="fas fa-times-circle mt-1"></i> 清空标签
-						</v-touch>
+						<IconBtn :class="{invisible: activeTags.length === 0}" iconClass="fa-times-circle mt-1" @click.native.passive="clearTags"> 清空标签</IconBtn>
 					</div>
 				</div>
-			</div>
-		</nav>
+			</NavbarCollapse>
+		</BaseHeader>
 
 		<!-- 更新状态栏 -->
 		<transition name="pull">
-			<div class="divider" v-if="showStatus">
-				<template v-if="isSuccess">
-					<hr>&nbsp;&nbsp; 更新成功 <i class="fas fa-check-circle"></i> &nbsp;&nbsp;<hr>
-				</template>
-				<template v-else-if="isError">
-					<hr>&nbsp;&nbsp; 更新失败 <i class="fas fa-exclamation-circle"></i> &nbsp;&nbsp;<hr>
-				</template>
-				<template v-else>
-					<hr>&nbsp;&nbsp; 正在更新 <i class="fas fa-sync-alt"></i> &nbsp;&nbsp;<hr>
-				</template>
-			</div>
+			<template v-if="showStatus">
+				<PageDivider v-if="isSuccess" dividerText="更新成功" iconClass="fa-check-circle"/>
+				<PageDivider v-else-if="isError" dividerText="更新失败" iconClass="fa-exclamation-circle"/>
+				<PageDivider v-else dividerText="正在更新" iconClass="fa-sync-alt"/>
+			</template>
 		</transition>
 
 		<!-- 电影列表 -->
-		<v-touch class="tab-content" @tap="onFold">
+		<div class="tab-content" @click.passive="onFold">
 			<!-- 全览模式 -->
 			<v-touch class="tab-pane active" id="full-mode" @swipeup="swipeUp" @swipedown="swipeDown">
 				<v-touch class="film-card my-1 p-3" v-for="item in filterFilms" :key="'filterFilm_' + item.id" @press="filmOrder = item.id">
 					<div class="d-flex">
 						<!-- 海报 -->
 						<div class="film-card-poster">
-							<img :src="baseUrl + item.posterUrl" :alt="item.transName" width="100%" height="100%" @click.passive="posterOrder = item.id">
+							<img :src="baseUrl + item.posterUrl" width="100%" height="100%" @click.passive="posterOrder = item.id">
 							<!-- 评分 -->
-							<a class="badge" :style="{'background-color': getColor(item)}" :href="item.doubanUrl" target="_blank">{{ item.score }}</a>
+							<LinkBadge :style="{'background-color': getColor(item)}" :badgeUrl="item.doubanUrl" :badgeText="item.score"/>
 
 							<!-- 查看大图 -->
-							<div class="film-card-poster-large p-3 pb-1" v-show="posterOrder === item.id" @click.self="posterOrder = 0">
-								<img :src="baseUrl + item.posterUrl" :alt="item.transName" width="100%" @click.passive="posterOrder = 0">
+							<ImgModal class="film-card-poster-large p-3 pb-1" v-show="posterOrder === item.id" :tipsInvisible="saveHidden" :imgName="item.transName" @click.self="posterOrder = 0">
+								<img :src="baseUrl + item.posterUrl" width="100%" @click.passive="posterOrder = 0">
 								<br><br>
-								<a class="btn mb-1" :href="baseUrl + item.posterUrl" :download="item.transName" @click.passive="onSave">保存图片</a>
-								<br>
-								<p :class="{invisible: saveHidden}">图片 <span>{{ item.transName }}</span> 已保存到手机相册</p>
-							</div>
+								<LinkBtn :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.passive="onSave"/>
+							</ImgModal>
 						</div>
 						<!-- 信息 -->
 						<div class="film-card-info pl-2">
 							<h5>{{ item.transName }}</h5>
 							<h6>{{ item.offiName }}</h6>
-							<div class="d-flex">
-								<p>类型：</p>
-								<p>{{ item.type }}</p>
-							</div>
-							<div class="d-flex">
-								<p>年份：</p>
-								<p>{{ item.year }}</p>
-							</div>
-							<div class="d-flex">
-								<p>地区：</p>
-								<p>{{ item.country }}</p>
-							</div>
-							<div class="d-flex">
-								<p>导演：</p>
-								<p>{{ item.director }}</p>
-							</div>
-							<div class="d-flex">
-								<p>主演：</p>
-								<p>{{ item.star }}</p>
-							</div>
+							<FlexBox flexTitle="类型" :flexContent="item.type"/>
+							<FlexBox flexTitle="年份" :flexContent="item.year"/>
+							<FlexBox flexTitle="地区" :flexContent="item.country"/>
+							<FlexBox flexTitle="导演" :flexContent="item.country"/>
+							<FlexBox flexTitle="主演" :flexContent="item.country"/>
 						</div>
 					</div>
 					<!-- 评语 -->
-					<div class="d-flex mt-2 px-2 film-card-comment">
-						<p><i class="fas fa-comment-dots mr-1"></i></p>
-						<p>{{ item.comment }}</p>
-					</div>
+					<FlexBox class="film-card-comment mt-2 px-2" :flexContent="item.comment">
+						<i class="fas fa-comment-dots mr-1"></i>
+					</FlexBox>
 					<!-- 选项 -->
-					<div class="d-flex justify-content-center film-card-options" v-if="filmOrder === item.id">
-						<v-touch class="option mx-3" @tap="onOption(1)">
-							<a class="btn px-0"><i class="fas fa-plus"></i></a>
-							<br>
-							加入待看
-						</v-touch>
-						<v-touch class="option mx-3" @tap="onOption(2)">
-							<a class="btn px-0"><i class="fas fa-check"></i></a>
-							<br>
-							标记已看
-						</v-touch>
-						<v-touch class="option mx-3" @tap="onOption(3)">
-							<a class="btn px-0"><i class="fas fa-thumbtack"></i></a>
-							<br>
-							添加笔记
-						</v-touch>
-						<v-touch class="option mx-3" @tap="onOption(4)">
-							<a class="btn px-0"><i class="fas fa-pen"></i></a>
-							<br>
-							撰写影评
-						</v-touch>
-					</div>
+					<IconOptions v-if="filmOrder === item.id">
+						<IconOptionsItem class="mx-3" iconClass="fa-plus" optionText="加入待看" @click.passive="onOption(1)"/>
+						<IconOptionsItem class="mx-3" iconClass="fa-check" optionText="标记已看" @click.passive="onOption(2)"/>
+						<IconOptionsItem class="mx-3" iconClass="fa-thumbtack" optionText="添加笔记" @click.passive="onOption(3)"/>
+						<IconOptionsItem class="mx-3" iconClass="fa-pen" optionText="撰写影评" @click.passive="onOption(4)"/>
+					</IconOptions>
 				</v-touch>
 				<!-- 底部分割线 -->
-				<div class="divider" v-if="films.length > 0">
-					<template v-if="filterFilms.length > 0">
-						<hr>&nbsp;&nbsp; 已到底部 <i class="fas fa-hourglass-end"></i> &nbsp;&nbsp;<hr>
-					</template>
-					<template v-else>
-						<hr>&nbsp;&nbsp; 暂无匹配 <i class="fas fa-ban"></i> &nbsp;&nbsp;<hr>
-					</template>
-				</div>
+				<template v-if="films.length > 0">
+					<PageDivider v-if="filterFilms.length > 0" dividerText="已到底部" iconClass="fa-hourglass-end"/>
+					<PageDivider v-else dividerText="暂无匹配" iconClass="fa-ban"/>
+				</template>
 			</v-touch>
 
 			<!-- 简约模式 -->
@@ -213,26 +172,26 @@
 					</div>
 					<!-- 选项 -->
 					<div class="d-flex justify-content-center film-card-options" v-if="filmOrder === item.id">
-						<v-touch class="option mx-3" @tap="onOption(1)">
+						<div class="option mx-3" @click.passive="onOption(1)">
 							<a class="btn px-0"><i class="fas fa-plus"></i></a>
 							<br>
 							加入待看
-						</v-touch>
-						<v-touch class="option mx-3" @tap="onOption(2)">
+						</div>
+						<div class="option mx-3" @click.passive="onOption(2)">
 							<a class="btn px-0"><i class="fas fa-check"></i></a>
 							<br>
 							标记已看
-						</v-touch>
-						<v-touch class="option mx-3" @tap="onOption(3)">
+						</div>
+						<div class="option mx-3" @click.passive="onOption(3)">
 							<a class="btn px-0"><i class="fas fa-thumbtack"></i></a>
 							<br>
 							添加笔记
-						</v-touch>
-						<v-touch class="option mx-3" @tap="onOption(4)">
+						</div>
+						<div class="option mx-3" @click.passive="onOption(4)">
 							<a class="btn px-0"><i class="fas fa-pen"></i></a>
 							<br>
 							撰写影评
-						</v-touch>
+						</div>
 					</div>
 				</v-touch>
 				<!-- 底部分割线 -->
@@ -251,7 +210,7 @@
 				<div class="row no-gutters">
 					<div class="col-4">
 						<!-- 导航 -->
-						<div class="list-group border-right" id="series-nav">
+						<div class="list-group border-right" :class="{upward: headerHidden}" id="series-nav">
 							<a class="list-group-item list-group-item-action p-2 rounded-0 border-left-0 border-right-0" :href="'#series_' + item.seriesId" v-for="item in filterSeries" :key="'filterSeries_' + item.seriesId">
 								<!-- 有系列 -->
 								<template v-if="item.filmList.length > 1">
@@ -288,34 +247,34 @@
 										<span class="badge rounded-0"><span>No.</span>{{ index + 1 }}</span>
 										<!-- 选项 -->
 										<div class="d-flex justify-content-center flex-wrap film-card-options" v-if="filmOrder === film.id">
-											<v-touch class="option mx-2" @tap="onOption(1)">
+											<div class="option mx-2" @click.passive="onOption(1)">
 												<a class="btn px-0"><i class="fas fa-plus"></i></a>
 												<br>
 												加入
 												<br>
 												待看
-											</v-touch>
-											<v-touch class="option mx-2" @tap="onOption(2)">
+											</div>
+											<div class="option mx-2" @click.passive="onOption(2)">
 												<a class="btn px-0"><i class="fas fa-check"></i></a>
 												<br>
 												标记
 												<br>
 												已看
-											</v-touch>
-											<v-touch class="option mx-2" @tap="onOption(3)">
+											</div>
+											<div class="option mx-2" @click.passive="onOption(3)">
 												<a class="btn px-0"><i class="fas fa-thumbtack"></i></a>
 												<br>
 												添加
 												<br>
 												笔记
-											</v-touch>
-											<v-touch class="option mx-2" @tap="onOption(4)">
+											</div>
+											<div class="option mx-2" @click.passive="onOption(4)">
 												<a class="btn px-0"><i class="fas fa-pen"></i></a>
 												<br>
 												撰写
 												<br>
 												影评
-											</v-touch>
+											</div>
 										</div>
 
 										<!-- 查看详情 -->
@@ -325,7 +284,7 @@
 												<img :class="{scale: showPoster}" :src="baseUrl + film.posterUrl" :alt="film.transName" width="100%" @click.passive="showPoster = !showPoster">
 												<!-- 信息 -->
 												<transition name="slide">
-													<v-touch class="film-card-info p-3" v-if="!showPoster" @tap="detailOrder = 0">
+													<div class="film-card-info p-3" v-if="!showPoster" @click.passive="detailOrder = 0">
 														<h5>{{ film.transName }}</h5>
 														<h6>{{ film.offiName }}</h6>
 														<p>类型：{{ film.type }}</p>
@@ -337,7 +296,7 @@
 															<p><i class="fas fa-comment-dots mr-2"></i></p>
 															<p>{{ film.comment }}</p>
 														</div>
-													</v-touch>
+													</div>
 												</transition>
 
 												<!-- 查看大图 -->
@@ -364,25 +323,25 @@
 					</div>
 				</div>
 			</div>
-		</v-touch>
+		</div>
 
 		<!-- 快捷按钮 -->
-		<v-touch @tap="onFold">
-			<v-touch class="shortcut" id="to-top" @tap="onTop">
+		<div @click.passive="onFold">
+			<div class="shortcut" id="to-top" @click.passive="onTop">
 				<i class="fas fa-chevron-up"></i>
-			</v-touch>
-			<v-touch class="shortcut" @tap="onReload">
+			</div>
+			<div class="shortcut" @click.passive="onReload">
 				<i class="fas fa-sync-alt" v-if="isReload" key="sync-icon"></i>
 				<i class="fas fa-redo-alt" v-else key="redo-icon"></i>
-			</v-touch>
-			<v-touch class="shortcut" id="to-bottom" @tap="onBottom">
+			</div>
+			<div class="shortcut" id="to-bottom" @click.passive="onBottom">
 				<i class="fas fa-chevron-down"></i>
-			</v-touch>
-		</v-touch>
+			</div>
+		</div>
 
 		<!-- 遮罩 -->
 		<div class="poster-backdrop" v-if="posterOrder > 0 || showPoster"></div>
-		<v-touch class="detail-backdrop" v-if="detailOrder > 0 && !showPoster" @tap="detailOrder = 0"></v-touch>
+		<div class="detail-backdrop" v-if="detailOrder > 0 && !showPoster" @click.passive="detailOrder = 0"></div>
 	</div>
 </template>
 
@@ -390,16 +349,45 @@
 import $ from 'jquery'
 import axios from 'axios'
 import getData from '../api/index'
-import FullHeader from '../components/FullHeader'
-import FullHeaderBtn from '../components/FullHeaderBtn'
-import MiniHeader from '../components/MiniHeader'
+
+import BaseHeader from '../components/BaseHeader'
+import BaseHeaderTitle from '../components/BaseHeaderTitle'
+import BaseHeaderNav from '../components/BaseHeaderNav'
+import BaseHeaderNavItem from '../components/BaseHeaderNavItem'
+import CollapseToggler from '../components/CollapseToggler'
+import IconBtn from '../components/IconBtn'
+import SearchInput from '../components/SearchInput'
+import NavbarCollapse from '../components/NavbarCollapse'
+import SortBtn from '../components/SortBtn'
+import BaseBtnSm from '../components/BaseBtnSm'
+import PageDivider from '../components/PageDivider'
+import LinkBadge from '../components/LinkBadge'
+import ImgModal from '../components/ImgModal'
+import LinkBtn from '../components/LinkBtn'
+import FlexBox from '../components/FlexBox'
+import IconOptions from '../components/IconOptions'
+import IconOptionsItem from '../components/IconOptionsItem'
 
 export default {
   name: 'AllRcmd',
   components: {
-    FullHeader,
-    FullHeaderBtn,
-    MiniHeader
+    BaseHeader,
+    BaseHeaderTitle,
+    BaseHeaderNav,
+    BaseHeaderNavItem,
+    CollapseToggler,
+    IconBtn,
+    SearchInput,
+    NavbarCollapse,
+    SortBtn,
+    BaseBtnSm,
+    PageDivider,
+    LinkBadge,
+    ImgModal,
+    LinkBtn,
+    FlexBox,
+    IconOptions,
+    IconOptionsItem
   },
   directives: {
     // 自定义指令：元素自动获得焦点
@@ -421,7 +409,6 @@ export default {
       showSearch: false,
       isFocus: false,
       searchText: '',
-      sorts: ['年份', '评分', '更新'],
       tags: [
         {
           tag: '变异',
@@ -809,9 +796,14 @@ export default {
     	}
 
     	if (this.searchText.length > 0) {
-    		$('#search-input').focus()
+    		$('input').focus()
     		this.searchText = ''
     	}
+    },
+    // 不同点击切换排序方式；同一按钮点击切换正倒序
+    onSort (order) {
+    	this.sortOrder = order
+    	this.isReverse = !this.isReverse
     },
     // 点击切换标签激活状态；若选中则添加到筛选信息中，否则从中删除；激活时关闭搜索框
     onTag (item) {
