@@ -1,11 +1,11 @@
 <template>
-	<div class="d-flex">
+	<div class="film-card-comment mt-2 px-2">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FlexBox'
+  name: 'BgBox'
 }
 </script>

@@ -1,25 +1,25 @@
 <template>
 	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
-    <BaseHeader class="header" :class="{upward: headerHidden}">
-      <BaseHeaderTitle :class="{'d-none': headerHidden}" pageTitle="我的影记"/>
+    <BaseNavbar class="header" :class="{upward: headerHidden}">
+      <BaseNavbarTitle :class="{'d-none': headerHidden}" pageTitle="我的影记"/>
       <!-- 小标题 -->
       <transition name="fade">
-        <BaseHeaderTitle class="header-min" v-if="headerHidden" pageTitle="我的影记"/>
+        <BaseNavbarTitle class="header-min" v-if="headerHidden" pageTitle="我的影记"/>
       </transition>
-    </BaseHeader>
+    </BaseNavbar>
 	</div>
 </template>
 
 <script>
-import BaseHeader from '../components/BaseHeader'
-import BaseHeaderTitle from '../components/BaseHeaderTitle'
+import BaseNavbar from '../components/BaseNavbar'
+import BaseNavbarTitle from '../components/BaseNavbarTitle'
 
 export default {
   name: 'MyReview',
   components: {
-    BaseHeader,
-    BaseHeaderTitle
+    BaseNavbar,
+    BaseNavbarTitle
   },
   data () {
     return {

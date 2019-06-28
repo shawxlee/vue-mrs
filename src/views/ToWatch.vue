@@ -1,25 +1,25 @@
 <template>
 	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
-    <BaseHeader class="header" :class="{upward: headerHidden}">
-      <BaseHeaderTitle :class="{'d-none': headerHidden}" pageTitle="待看片单"/>
+    <BaseNavbar class="header" :class="{upward: headerHidden}">
+      <BaseNavbarTitle :class="{'d-none': headerHidden}" pageTitle="待看片单"/>
       <!-- 小标题 -->
       <transition name="fade">
-        <BaseHeaderTitle class="header-min" v-if="headerHidden" pageTitle="待看片单"/>
+        <BaseNavbarTitle class="header-min" v-if="headerHidden" pageTitle="待看片单"/>
       </transition>
-    </BaseHeader>
+    </BaseNavbar>
   </div>
 </template>
 
 <script>
-import BaseHeader from '../components/BaseHeader'
-import BaseHeaderTitle from '../components/BaseHeaderTitle'
+import BaseNavbar from '../components/BaseNavbar'
+import BaseNavbarTitle from '../components/BaseNavbarTitle'
 
 export default {
   name: 'ToWatch',
   components: {
-    BaseHeader,
-    BaseHeaderTitle
+    BaseNavbar,
+    BaseNavbarTitle
   },
   data () {
     return {

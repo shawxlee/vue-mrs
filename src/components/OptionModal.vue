@@ -1,11 +1,11 @@
 <template>
-	<div class="d-flex">
+	<div class="d-flex justify-content-center film-card-options">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FlexBox'
+  name: 'OptionModal'
 }
 </script>

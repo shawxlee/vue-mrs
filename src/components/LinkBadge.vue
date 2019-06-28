@@ -1,12 +1,12 @@
 <template>
-	<a class="badge" :href="badgeUrl" target="_blank">{{ badgeText }}</a>
+	<a class="badge" :href="webUrl" target="_blank">{{ badgeText }}</a>
 </template>
 
 <script>
 export default {
   name: 'LinkBadge',
   props: {
-  	badgeUrl: {
+  	webUrl: {
   		type: String,
   		required: true
   	},

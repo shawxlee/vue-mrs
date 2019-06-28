@@ -1,24 +1,24 @@
 <template>
 	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
-		<BaseHeader class="header" :class="{upward: headerHidden}" @click.native.passive="onFold">
-			<BaseHeaderTitle :class="{'d-none': headerHidden}" pageTitle="全部推荐"/>
+		<BaseNavbar class="header" :class="{upward: headerHidden}" @click.native.passive="onFold">
+			<BaseNavbarTitle :class="{'d-none': headerHidden}" pageTitle="全部推荐"/>
 			<!-- 切换模式 -->
-			<BaseHeaderNav :class="{'d-none': headerHidden}">
-				<BaseHeaderNavItem modeId="#full-mode" modeName="全览模式" modeActive/>
-				<BaseHeaderNavItem modeId="#mini-mode" modeName="简约模式"/>
-				<BaseHeaderNavItem modeId="#series-mode" modeName="系列模式"/>
-			</BaseHeaderNav>
+			<BaseNavbarNav :class="{'d-none': headerHidden}">
+				<BaseNavbarNavItem modeId="#full-mode" modeName="全览模式" isTrue/>
+				<BaseNavbarNavItem modeId="#mini-mode" modeName="简约模式"/>
+				<BaseNavbarNavItem modeId="#series-mode" modeName="系列模式"/>
+			</BaseNavbarNav>
 			<!-- 小标题 -->
 			<transition name="fade">
-				<BaseHeaderTitle class="header-min" v-if="headerHidden" pageTitle="全部推荐"/>
+				<BaseNavbarTitle class="header-min" v-if="headerHidden" pageTitle="全部推荐"/>
 			</transition>
-		</BaseHeader>
+		</BaseNavbar>
 
 		<!-- 工具栏 -->
-		<BaseHeader class="toolbar" :class="{upward: headerHidden}">
+		<BaseNavbar class="toolbar" :class="{upward: headerHidden}">
 			<!-- 筛选器 -->
-			<CollapseToggler class="toolbar-toggler" collapseId="#screen-collapse">
+			<BaseNavbarToggler class="toolbar-toggler" targetId="#screen-collapse">
 				<IconBtn :class="{active: !screenHidden}" iconClass="fa-sort-amount-down"/>
 				<!-- 筛选信息 -->
 				<template v-if="screenHidden">
@@ -30,7 +30,7 @@
 					<span v-show="sortOrder === 3 && isReverse">最早更新</span>
 					<span v-for="(item, index) in activeTags" :key="'activeTag_' + index"> · {{ item }}</span>
 				</template>
-			</CollapseToggler>
+			</BaseNavbarToggler>
 			<!-- 搜索框 -->
 			<form class="toolbar-form">
 				<transition name="stretch">
@@ -40,17 +40,17 @@
 			</form>
 
 			<!-- 筛选面板 -->
-			<NavbarCollapse id="screen-collapse">
+			<BaseNavbarCollapse id="screen-collapse">
 				<div class="row no-gutters justify-content-between">
 					<!-- 排序按钮 -->
 					<div class="col-4 px-1">
-						<SortBtn :class="{active: sortOrder === 1}" sortName="年份" :sortDisabled="isReverse" @click.native.passive="onSort(1)"/>
+						<SortBtn :class="{active: sortOrder === 1}" sortName="年份" :isTrue="isReverse" @click.native.passive="onSort(1)"/>
 					</div>
 					<div class="col-4 px-1">
-						<SortBtn :class="{active: sortOrder === 2}" sortName="评分" :sortDisabled="isReverse" @click.native.passive="onSort(2)"/>
+						<SortBtn :class="{active: sortOrder === 2}" sortName="评分" :isTrue="isReverse" @click.native.passive="onSort(2)"/>
 					</div>
 					<div class="col-4 px-1">
-						<SortBtn :class="{active: sortOrder === 3}" sortName="更新" :sortDisabled="isReverse" @click.native.passive="onSort(3)"/>
+						<SortBtn :class="{active: sortOrder === 3}" sortName="更新" :isTrue="isReverse" @click.native.passive="onSort(3)"/>
 					</div>
 					<div class="w-100"><hr></div>
 					<!-- 过滤标签 -->
@@ -64,8 +64,8 @@
 						<IconBtn :class="{invisible: activeTags.length === 0}" iconClass="fa-times-circle mt-1" @click.native.passive="clearTags"> 清空标签</IconBtn>
 					</div>
 				</div>
-			</NavbarCollapse>
-		</BaseHeader>
+			</BaseNavbarCollapse>
+		</BaseNavbar>
 
 		<!-- 更新状态栏 -->
 		<transition name="pull">
@@ -81,43 +81,47 @@
 			<!-- 全览模式 -->
 			<v-touch class="tab-pane active" id="full-mode" @swipeup="swipeUp" @swipedown="swipeDown">
 				<v-touch class="film-card my-1 p-3" v-for="item in filterFilms" :key="'filterFilm_' + item.id" @press="filmOrder = item.id">
-					<div class="d-flex">
+					<FlexBox>
 						<!-- 海报 -->
-						<div class="film-card-poster">
+						<ImgBox>
 							<img :src="baseUrl + item.posterUrl" width="100%" height="100%" @click.passive="posterOrder = item.id">
 							<!-- 评分 -->
-							<LinkBadge :style="{'background-color': getColor(item)}" :badgeUrl="item.doubanUrl" :badgeText="item.score"/>
-
-							<!-- 查看大图 -->
-							<ImgModal class="film-card-poster-large p-3 pb-1" v-show="posterOrder === item.id" :tipsInvisible="saveHidden" :imgName="item.transName" @click.self="posterOrder = 0">
-								<img :src="baseUrl + item.posterUrl" width="100%" @click.passive="posterOrder = 0">
-								<br><br>
-								<LinkBtn :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.passive="onSave"/>
-							</ImgModal>
-						</div>
+							<LinkBadge :style="{'background-color': getColor(item)}" :webUrl="item.doubanUrl" :badgeText="item.score"/>
+						</ImgBox>
 						<!-- 信息 -->
-						<div class="film-card-info pl-2">
+						<InfoBox>
 							<h5>{{ item.transName }}</h5>
 							<h6>{{ item.offiName }}</h6>
-							<FlexBox flexTitle="类型" :flexContent="item.type"/>
-							<FlexBox flexTitle="年份" :flexContent="item.year"/>
-							<FlexBox flexTitle="地区" :flexContent="item.country"/>
-							<FlexBox flexTitle="导演" :flexContent="item.country"/>
-							<FlexBox flexTitle="主演" :flexContent="item.country"/>
-						</div>
-					</div>
-					<!-- 评语 -->
-					<FlexBox class="film-card-comment mt-2 px-2" :flexContent="item.comment">
-						<i class="fas fa-comment-dots mr-1"></i>
+							<InfoBoxItem infoTitle="类型" :infoContent="item.type"/>
+							<InfoBoxItem infoTitle="年份" :infoContent="item.year"/>
+							<InfoBoxItem infoTitle="地区" :infoContent="item.country"/>
+							<InfoBoxItem infoTitle="导演" :infoContent="item.director"/>
+							<InfoBoxItem infoTitle="主演" :infoContent="item.star"/>
+						</InfoBox>
 					</FlexBox>
-					<!-- 选项 -->
-					<IconOptions v-if="filmOrder === item.id">
-						<IconOptionsItem class="mx-3" iconClass="fa-plus" optionText="加入待看" @click.passive="onOption(1)"/>
-						<IconOptionsItem class="mx-3" iconClass="fa-check" optionText="标记已看" @click.passive="onOption(2)"/>
-						<IconOptionsItem class="mx-3" iconClass="fa-thumbtack" optionText="添加笔记" @click.passive="onOption(3)"/>
-						<IconOptionsItem class="mx-3" iconClass="fa-pen" optionText="撰写影评" @click.passive="onOption(4)"/>
-					</IconOptions>
+					<!-- 评语 -->
+					<BgBox>
+						<FlexBox>
+							<p><i class="fas fa-comment-dots mr-2"></i></p>
+							<p>{{ item.comment }}</p>
+						</FlexBox>
+					</BgBox>
+
+					<!-- 查看大图 -->
+					<ImgModal v-show="posterOrder === item.id" :isTrue="saveHidden" :imgName="item.transName" @click.self="posterOrder = 0">
+						<img :src="baseUrl + item.posterUrl" width="100%" @click.passive="posterOrder = 0">
+						<br><br>
+						<LinkBtn :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.passive="onSave"/>
+					</ImgModal>
+					<!-- 弹出选项 -->
+					<OptionModal v-if="filmOrder === item.id">
+						<OptionModalItem class="mx-3" iconClass="fa-plus" optionText="加入待看" @click.passive="onOption(1)"/>
+						<OptionModalItem class="mx-3" iconClass="fa-check" optionText="标记已看" @click.passive="onOption(2)"/>
+						<OptionModalItem class="mx-3" iconClass="fa-thumbtack" optionText="添加笔记" @click.passive="onOption(3)"/>
+						<OptionModalItem class="mx-3" iconClass="fa-pen" optionText="撰写影评" @click.passive="onOption(4)"/>
+					</OptionModal>
 				</v-touch>
+
 				<!-- 底部分割线 -->
 				<template v-if="films.length > 0">
 					<PageDivider v-if="filterFilms.length > 0" dividerText="已到底部" iconClass="fa-hourglass-end"/>
@@ -129,47 +133,36 @@
 			<v-touch class="tab-pane accordion" id="mini-mode" @swipeup="swipeUp" @swipedown="swipeDown">
 				<v-touch class="film-card m-1" v-for="item in filterFilms" :key="'filterFilm_' + item.id" @press="filmOrder = item.id">
 					<!-- 主体 -->
-					<div class="accordion-toggler px-3 shadow-sm collapsed" data-toggle="collapse" :data-target="'#info_' + item.id">
-						<h5><a class="badge mr-2" :style="{'background-color': getColor(item)}" :href="item.doubanUrl" target="_blank">{{ item.score }}</a>{{ item.transName }} <small>({{ item.year }})</small></h5>
+					<AccordionToggler :targetId="'#info_' + item.id">
+						<h5>
+							<LinkBadge :style="{'background-color': getColor(item)}" :webUrl="item.doubanUrl" :badgeText="item.score"/> {{ item.transName }} <small>({{ item.year }})</small>
+						</h5>
 						<p><i class="fas fa-tag mr-2 mb-0"></i>{{ item.type }}</p>
-					</div>
+					</AccordionToggler>
 					<!-- 展开详情 -->
-					<div class="collapse shadow-sm" :id="'info_' + item.id" data-parent="#mini-mode">
-						<div class="d-flex p-3">
+					<AccordionCollapse :id="'info_' + item.id" parentId="#mini-mode">
+						<FlexBox>
 							<!-- 海报 -->
-							<div class="film-card-poster">
+							<ImgBox>
 								<img :src="baseUrl + item.posterUrl" :alt="item.transName" width="100%" height="100%" @click.passive="posterOrder = item.id">
-
-								<!-- 查看大图 -->
-								<div class="film-card-poster-large p-3 pb-1" v-show="posterOrder === item.id" @click.self="posterOrder = 0">
-									<img :src="baseUrl + item.posterUrl" :alt="item.transName" width="100%" @click.passive="posterOrder = 0">
-									<br><br>
-									<a class="btn mb-1" :href="baseUrl + item.posterUrl" :download="item.transName" @click.passive="onSave">保存图片</a>
-									<br>
-									<p :class="{invisible: saveHidden}">图片 <span>{{ item.transName }}</span> 已保存到手机相册</p>
-								</div>
-							</div>
+							</ImgBox>
 							<!-- 信息 -->
-							<div class="film-card-info pl-2">
+							<InfoBox>
 								<h6>{{ item.offiName }}</h6>
-								<div class="d-flex">
-									<p>地区：</p>
-									<p>{{ item.country }}</p>
-								</div>
-								<div class="d-flex">
-									<p>导演：</p>
-									<p>{{ item.director }}</p>
-								</div>
-								<div class="d-flex">
-									<p>主演：</p>
-									<p>{{ item.star }}</p>
-								</div>
-								<div class="film-card-comment mt-2 px-2">
-									<i class="fas fa-comment-dots mr-1"></i>{{ item.comment }}
-								</div>
-							</div>
-						</div>
-					</div>
+								<InfoBoxItem infoTitle="地区" :infoContent="item.country"/>
+								<InfoBoxItem infoTitle="导演" :infoContent="item.director"/>
+								<InfoBoxItem infoTitle="主演" :infoContent="item.star"/>
+								<BgBox><i class="fas fa-comment-dots mr-1"></i>{{ item.comment }}</BgBox>
+							</InfoBox>
+						</FlexBox>
+					</AccordionCollapse>
+
+					<!-- 查看大图 -->
+					<ImgModal v-show="posterOrder === item.id" :isTrue="saveHidden" :imgName="item.transName" @click.self="posterOrder = 0">
+						<img :src="baseUrl + item.posterUrl" width="100%" @click.passive="posterOrder = 0">
+						<br><br>
+						<LinkBtn :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.passive="onSave"/>
+					</ImgModal>
 					<!-- 选项 -->
 					<div class="d-flex justify-content-center film-card-options" v-if="filmOrder === item.id">
 						<div class="option mx-3" @click.passive="onOption(1)">
@@ -350,44 +343,56 @@ import $ from 'jquery'
 import axios from 'axios'
 import getData from '../api/index'
 
-import BaseHeader from '../components/BaseHeader'
-import BaseHeaderTitle from '../components/BaseHeaderTitle'
-import BaseHeaderNav from '../components/BaseHeaderNav'
-import BaseHeaderNavItem from '../components/BaseHeaderNavItem'
-import CollapseToggler from '../components/CollapseToggler'
+import BaseNavbar from '../components/BaseNavbar'
+import BaseNavbarTitle from '../components/BaseNavbarTitle'
+import BaseNavbarNav from '../components/BaseNavbarNav'
+import BaseNavbarNavItem from '../components/BaseNavbarNavItem'
+import BaseNavbarToggler from '../components/BaseNavbarToggler'
 import IconBtn from '../components/IconBtn'
 import SearchInput from '../components/SearchInput'
-import NavbarCollapse from '../components/NavbarCollapse'
+import BaseNavbarCollapse from '../components/BaseNavbarCollapse'
 import SortBtn from '../components/SortBtn'
 import BaseBtnSm from '../components/BaseBtnSm'
 import PageDivider from '../components/PageDivider'
+import FlexBox from '../components/FlexBox'
+import ImgBox from '../components/ImgBox'
 import LinkBadge from '../components/LinkBadge'
 import ImgModal from '../components/ImgModal'
 import LinkBtn from '../components/LinkBtn'
-import FlexBox from '../components/FlexBox'
-import IconOptions from '../components/IconOptions'
-import IconOptionsItem from '../components/IconOptionsItem'
+import InfoBox from '../components/InfoBox'
+import InfoBoxItem from '../components/InfoBoxItem'
+import BgBox from '../components/BgBox'
+import OptionModal from '../components/OptionModal'
+import OptionModalItem from '../components/OptionModalItem'
+import AccordionToggler from '../components/AccordionToggler'
+import AccordionCollapse from '../components/AccordionCollapse'
 
 export default {
   name: 'AllRcmd',
   components: {
-    BaseHeader,
-    BaseHeaderTitle,
-    BaseHeaderNav,
-    BaseHeaderNavItem,
-    CollapseToggler,
+    BaseNavbar,
+    BaseNavbarTitle,
+    BaseNavbarNav,
+    BaseNavbarNavItem,
+    BaseNavbarToggler,
     IconBtn,
     SearchInput,
-    NavbarCollapse,
+    BaseNavbarCollapse,
     SortBtn,
     BaseBtnSm,
     PageDivider,
+    FlexBox,
+    ImgBox,
     LinkBadge,
     ImgModal,
     LinkBtn,
-    FlexBox,
-    IconOptions,
-    IconOptionsItem
+    InfoBox,
+    InfoBoxItem,
+    BgBox,
+    OptionModal,
+    OptionModalItem,
+    AccordionToggler,
+    AccordionCollapse
   },
   directives: {
     // 自定义指令：元素自动获得焦点
