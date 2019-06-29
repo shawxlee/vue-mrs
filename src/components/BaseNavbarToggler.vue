@@ -1,5 +1,5 @@
 <template>
-	<div data-toggle="collapse" :data-target="targetId">
+	<div class="base-navbar-toggler" data-toggle="collapse" :data-target="tarId">
     <slot></slot>
   </div>
 </template>
@@ -8,10 +8,18 @@
 export default {
   name: 'BaseNavbarToggler',
   props: {
-  	targetId: {
+  	tarId: {
   		type: String,
   		required: true
   	}
   }
 }
 </script>
+
+<style>
+.base-navbar-toggler {
+  width: calc(100% - 2.3rem);
+  font-size: 1rem;
+  color: #4f94cd;
+}
+</style>

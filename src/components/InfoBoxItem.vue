@@ -1,7 +1,7 @@
 <template>
-	<div class="d-flex">
+	<div class="d-flex info-box-item">
     <p>{{ infoTitle }}：</p>
-    <p>{{ infoContent }}</p>
+    <p>{{ infoCont }}</p>
   </div>
 </template>
 
@@ -13,10 +13,22 @@ export default {
       type: String,
       required: true
     },
-  	infoContent: {
+  	infoCont: {
   		type: String,
   		required: true
   	}
   }
 }
 </script>
+
+<style>
+.info-box-item p {
+  margin: 0;
+  font-size: .9rem;
+}
+.info-box-item p:last-of-type {
+  width: 80%;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+</style>

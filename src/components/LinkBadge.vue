@@ -1,5 +1,5 @@
 <template>
-	<a class="badge" :href="webUrl" target="_blank">{{ badgeText }}</a>
+	<a class="badge link-badge" :href="webUrl" target="_blank">{{ badgeText }}</a>
 </template>
 
 <script>
@@ -17,3 +17,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.link-badge.badge {
+  font-size: 1rem;
+  font-weight: normal;
+  color: white;
+}
+</style>

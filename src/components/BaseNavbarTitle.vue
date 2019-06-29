@@ -1,12 +1,12 @@
 <template>
-	<span class="navbar-text mb-0 h4">{{ pageTitle }}</span>
+	<span class="navbar-text mb-0 h4">{{ titleText }}</span>
 </template>
 
 <script>
 export default {
   name: 'BaseNavbarTitle',
   props: {
-    pageTitle: {
+    titleText: {
       type: String,
       required: true
     }

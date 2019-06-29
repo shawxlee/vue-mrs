@@ -1,5 +1,5 @@
 <template>
-	<div class="collapse p-3 shadow-sm" :data-parent="parentId">
+	<div class="collapse p-3 shadow-sm" :data-parent="parId">
     <slot></slot>
   </div>
 </template>
@@ -8,7 +8,7 @@
 export default {
   name: 'AccordionCollapse',
   props: {
-  	parentId: {
+  	parId: {
   		type: String,
   		required: true
   	}

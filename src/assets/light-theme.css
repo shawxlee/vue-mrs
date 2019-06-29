@@ -1,6 +1,5 @@
-/* $primary: #4f94cd; $secondary: #a9a9a9; $light: #e8e8e8; $dark: #1c1c1c; */
-
 /*  全局样式  */
+
 * {
 	touch-action: auto !important;
 }
@@ -74,7 +73,7 @@ body {
 
 /*  局部样式  */
 
-/* 顶部导航栏 */
+/* 置顶栏 */
 .header {
 	height: 3rem;
 	color: white;
@@ -86,7 +85,6 @@ body {
 }
 .header .nav-link {
 	height: 1.5rem;
-	padding: 0;
 	padding-top: .3rem;
 	font-size: .9rem;
 	line-height: 1;
@@ -97,7 +95,7 @@ body {
 	border-bottom: .1rem solid white;
 	background-color: transparent;
 }
-/* 收缩导航栏 */
+/* 缩小标题 */
 .header-min {
 	display: inline-block;
 	width: 100%;
@@ -128,27 +126,19 @@ body {
 	transition: transform .15s linear;
 }
 /* 搜索框 */
-.toolbar-form {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: calc(100% - 8rem);
-	margin: 0;
-	padding: 0;
-}
-.toolbar-form .form-control {
+.base-navbar-form .form-control {
 	position: absolute;
 	top: .2375rem;
 	right: 1rem;
 	width: 100%;
 	transition: width .15s linear;
 }
-.toolbar-form .navbar-toggler {
+.base-navbar-form .navbar-toggler {
 	position: absolute;
 	top: .5rem;
 	right: 1rem;
 }
-.toolbar-form .fa-times-circle {
+.base-navbar-form .fa-times-circle {
 	font-size: 1rem;
 	transform: translateY(-.1rem);
 }
@@ -170,42 +160,13 @@ body {
 	transition: all .3s linear;
 }
 /* 筛选器 */
-.toolbar-toggler {
-	width: calc(100% - 2.3rem);
-	font-size: 1rem;
+.base-navbar-toggler .navbar-toggler {
 	color: #4f94cd;
 }
-.toolbar-toggler .navbar-toggler {
-	padding-left: 0;
-	padding-right: .25rem;
-	color: #4f94cd;
-}
-.toolbar-toggler .navbar-toggler.active {
+.base-navbar-toggler .navbar-toggler.active {
 	color: #1c1c1c;
 }
 /* 筛选面板 */
-#screen-collapse .btn {
-	color: #4f94cd;
-}
-#screen-collapse .btn-sm {
-	font-size: .9rem;
-}
-#screen-collapse span {
-	display: inline-block;
-	width: 1rem;
-	font-size: .8rem;
-	line-height: 1;
-	transform: rotate(90deg);
-}
-#screen-collapse .fa-caret-left {
-	margin-right: .15rem;
-}
-#screen-collapse .btn.active {
-	color: white;
-}
-#screen-collapse .active .disabled {
-	color: #a9a9a9;
-}
 #screen-collapse .btn-more {
 	color: #a9a9a9;
 	background-color: #e8e8e8;
@@ -216,20 +177,6 @@ body {
 }
 
 /* 更新状态栏 */
-.divider {
-	width: 100%;
-	height: 3rem;
-	margin-top: .25rem;
-	font-size: 1rem;
-	line-height: 3;
-	color: #cfcfcf;
-	text-align: center;
-}
-.divider hr {
-	display: inline-block;
-	width: 30%;
-	vertical-align: middle;
-}
 /* 动画：图标旋转 */
 .fa-sync-alt,
 .fa-sync {
@@ -257,159 +204,49 @@ body {
 }
 
 /* 全览模式 */
-.film-card {
-	position: relative;
-	background-color: white;
-}
-/* 海报 */
-.film-card-poster {
-	position: relative;
-	width: 5.9rem;
-	height: 8.8rem;
-	overflow: hidden;
-	border-radius: .3rem;
-}
-.film-card-poster .badge {
+/* 评分 */
+#full-mode .link-badge.badge {
 	position: absolute;
 	top: .3rem;
 	right: .3rem;
-	font-size: 1rem;
-	font-weight: normal;
-	color: white;
-}
-/* 大图 */
-.film-card-poster-large {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: calc(3.8rem + 1px);
-	left: 0;
-	z-index: 1050;
-	text-align: center;
-}
-.film-card-poster-large .btn {
-	width: 6rem;
-	color: white;
-	border-color: white;
-}
-.film-card-poster-large p {
-	width: 100%;
-	font-size: .9rem;
-	text-align: center;
-	color: #cfcfcf;
-	opacity: 0;
-	transition: opacity .15s linear;
-}
-.film-card-poster-large span {
-	color: white;
 }
 /* 信息 */
-.film-card-info {
-	width: calc(100% - 5.9rem);
-	line-height: 1.35;
-	color: #828282;
-}
-.film-card-info h5 {
+.info-box h5 {
 	margin-top: .1rem;
 	margin-bottom: .1rem;
 	font-weight: bold;
 	line-height: 1;
 	color: #1c1c1c;
 }
-.film-card-info h6 {
+.info-box h6 {
 	margin-top: 0;
 	margin-bottom: .35rem;
 	font-weight: bold;
 	white-space: nowrap;
 	overflow-x: auto;
 }
-.film-card-info p {
-	margin: 0;
-	font-size: .9rem;
-}
-.film-card-info .d-flex p:last-of-type {
-	width: 80%;
-	white-space: nowrap;
-	overflow-x: auto;
-}
 /* 评语 */
-.film-card-comment {
-	height: 2.4rem;
-	font-size: 1rem;
-	line-height: 2.4;
-	color: #1c1c1c;
-	background-color: #f5f5f5;
-	border-radius: .3rem;
-}
-.film-card-comment i {
+.bg-box i {
 	color: #828282;
 	opacity: .8;
 }
-.film-card-comment p:last-of-type {
+.bg-box p:last-of-type {
 	height: 100%;
 	white-space: nowrap;
 	overflow-x: auto;
 }
 /* 选项 */
-.film-card-options {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background-color: rgba(0,0,0,.5);
-}
-.film-card-options .option {
-	margin: auto;
-	font-size: .8rem;
-	text-align: center;
-	color: white;
-}
-.film-card-options .btn {
-	width: 2.5rem;
-	height: 2.5rem;
-	margin-bottom: .25rem;
-	padding-top: .625rem;
-	font-size: 1.25rem;
-	line-height: 1;
-	background-color: white;
-	border: none;
-	border-radius: 50%;
-}
-.film-card-options .option:last-of-type .btn {
-	padding-top: .675rem;
+.option-modal-item .fa-pen {
 	font-size: 1.15rem;
-}
-.film-card-options i {
-	color: #4f94cd;
-}
-/* 底部分割线 */
-.tab-pane .divider {
-	margin-top: 0;
-	margin-bottom: 4.05rem;
 }
 
 /* 简约模式 */
-.accordion .film-card {
-	border-radius: .5rem;
-	overflow: hidden;
-}
 /* 主体 */
-.accordion-toggler {
-	padding-top: .7rem;
-	padding-bottom: .7rem;
-	color: white;
-	background-color: #4f94cd;
-	border-radius: .5rem .5rem 0 0;
-}
 .accordion-toggler h5 {
 	margin-bottom: .2rem;
 	font-weight: bold;
 }
-.accordion-toggler .badge {
-	font-size: 1rem;
-	font-weight: normal;
-	color: white;
+.accordion-toggler .link-badge.badge {
 	transform: translateY(-.14rem);
 }
 .accordion-toggler small {
@@ -422,11 +259,6 @@ body {
 .accordion-toggler i {
 	font-size: .8rem;
 }
-.accordion-toggler.collapsed {
-	background-color: white;
-	border-radius: .5rem;
-	color: #828282;
-}
 .accordion-toggler.collapsed h5 {
 	color: #1c1c1c;
 }
@@ -434,111 +266,58 @@ body {
 	color: #828282;
 }
 /* 详情 */
-.accordion .film-card-info h6 {
+.accordion h6 {
 	margin-bottom: .2rem;
 	line-height: 1;
 }
-.accordion .film-card-comment {
+.accordion .bg-box {
 	width: calc(100% + .2rem);
 	height: 3.63rem;
 	padding-top: .35rem;
 	line-height: 1.5;
 }
+.accordion .bg-box i {
+	transform: translateY(-.05rem);
+}
 
 /* 系列模式 */
 /* 导航 */
-.list-group {
-	position: fixed;
-	top: 6rem;
-	left: 0;
-	width: 33.3%;
-	height: calc(100% - 8.05rem);
-	overflow-y: auto;
-	overflow-x: hidden;
-	background-color: white;
-	transition: transform .15s linear;
-}
-.list-group-item {
-	width: calc(100% + 1px);
-	font-size: .9rem;
-	white-space: nowrap;
-	color: #828282;
-}
-.list-group-item span:first-of-type {
+.scrollspy-nav-item.list-group-item span:first-of-type {
 	font-size: 1rem;
 	font-weight: bold;
 	color: #4f4f4f;
 }
-.list-group-item .badge {
-	height: 1rem;
-	font-size: .8rem;
-	line-height: .8;
-	color: white;
-	background-color: #4f94cd;
-	transform: translateY(-.07rem);
-}
-.list-group-item.active {
-	background-color: #4f94cd;
-	border-color: #4f94cd;
-}
-.list-group-item.active span:first-of-type {
+.scrollspy-nav-item.list-group-item.active span:first-of-type {
 	color: white;
 }
-.list-group-item.active .badge {
+.scrollspy-nav-item.list-group-item.active .base-badge-pill.badge {
 	color: #4f94cd;
 	background-color: white;
 }
-/* 内容 */
-.series-content {
-	width: 100%;
-	overflow-x: hidden;
-}
-.series-id {
-	position: relative;
-	top: -6rem;
-}
 /* 主体 */
-.series-content .film-card-poster {
+#series-mode .img-box {
 	width: 6.9rem;
 	height: 9.9rem;
 	box-shadow: .3rem .3rem .5rem rgba(0,0,0,.15);
 }
-.series-content .film-card-poster .badge {
-	top: auto;
+#series-mode .link-badge.badge {
+	position: absolute;
+	right: .3rem;
 	bottom: .3rem;
 }
-.series-content h6 {
+#series-mode h6 {
 	width: 6.9rem;
+	margin: auto;
 	color: #1c1c1c;
 }
-.series-content h6 span {
+#series-mode h6 span {
 	color: #828282;
 }
-.series-content span.badge {
-	position: absolute;
-	top: 0;
-	left: .5rem;
-	font-size: .9rem;
-	color: #4f94cd;
-	background-color: rgba(255,255,255,.8);
-}
-.series-content span.badge span {
-	font-size: .8rem;
-	font-weight: normal;
-}
-.series-content .film-card-options {
+#series-mode .option-modal {
 	top: -1rem;
 }
 /* 详情 */
-.series-content-detail {
-	position: fixed;
-	right: 0;
-	bottom: calc(3.8rem + 1px);
-	left: 0;
-	z-index: 1050;
-	transition: all .15s linear;
-}
-.detail-up {
+.top {
 	top: 0;
 }
 /* 过渡：上滑/收起 */
@@ -557,7 +336,7 @@ body {
 	transition: transform .1s linear;
 }
 /* 底图 */
-.series-content-detail img {
+.detail-modal img {
 	transition: all .15s linear;
 }
 .scale {
@@ -565,7 +344,7 @@ body {
 	transform-origin: 50% 50%;
 }
 /* 信息 */
-.series-content-detail .film-card-info {
+.detail-modal .info-box {
 	position: absolute;
 	right: 0;
 	bottom: -1px;
@@ -573,19 +352,19 @@ body {
 	width: 100%;
 	background-color: white;
 }
-.series-content-detail .film-card-info h5 {
+.detail-modal .info-box h5 {
 	margin: 0;
 }
-.series-content-detail .film-card-info h6 {
+.detail-modal .info-box h6 {
 	width: 100%;
 	margin-top: .45rem;
 	margin-bottom: 1rem;
 	color: #828282;
 }
-.series-content-detail .film-card-info p {
+.detail-modal .info-box p {
 	margin-top: .45rem;
 }
-.series-content-detail .film-card-comment {
+.detail-modal .bg-box {
 	position: absolute;
 	top: -2.4rem;
 	right: 0;
@@ -593,74 +372,32 @@ body {
 	background-color: rgba(255,255,255,.8);
 	border-radius: 0;
 }
-.series-content-detail .film-card-comment p {
+.detail-modal .bg-box p {
 	margin-top: 0;
 	font-size: 1rem;
 }
-.series-content-detail .film-card-comment p:last-of-type {
+.detail-modal .bg-box p:last-of-type {
 	width: 100%;
 }
 /* 大图 */
-.series-content-detail .film-card-poster-large {
+.detail-modal .img-modal {
 	position: relative;
 	width: 100%;
 }
 /* 底部分割线 */
-.series-content .divider hr {
+.col-8 .tip-divider hr {
 	width: 25%;
 }
 
 /* 快捷按钮 */
-.shortcut {
-	position: fixed;
-	right: .7rem;
-	bottom: 7.5rem;
-	width: 2.5rem;
-	height: 2.5rem;
-	padding-top: .625rem;
-	font-size: 1.25rem;
-	line-height: 1;
-	color: white;
-	text-align: center;
-	background-color: #1c1c1c;
-	border-radius: 50%;
-	opacity: .5;
-}
-#to-top.shortcut {
+#to-top.shortcut-btn {
 	bottom: 10.5rem;
 }
-#to-bottom.shortcut {
+#to-bottom.shortcut-btn {
 	bottom: 4.5rem;
 }
 
 /* 遮罩 */
-.poster-backdrop,
-.detail-backdrop {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 3.8rem;
-	left: 0;
-	z-index: 1040;
-	background-color: rgba(0,0,0,.5);
-}
-.detail-backdrop {
+.bottom {
 	bottom: calc(3.8rem + 1px);
-}
-
-/* 底部导航 */
-.footer {
-	height: 3.8rem;
-	background-color: white;
-}
-.footer .nav-link {
-	padding-top: .6rem;
-	font-size: .8rem;
-	color: #a9a9a9;
-}
-.footer .nav-link.active {
-	color: #4f94cd;
-}
-.footer .nav-link i {
-	font-size: 1.5rem;
 }
