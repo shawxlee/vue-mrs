@@ -2,10 +2,10 @@
 	<div class="container-fluid">
 		<!-- 顶部导航栏 -->
     <BaseNavbar class="header" :class="{upward: headerHidden}">
-      <BaseNavbarTitle :class="{'d-none': headerHidden}" pageTitle="应用设置"/>
+      <BaseNavbarTitle v-show="!headerHidden" titleText="应用设置"/>
       <!-- 小标题 -->
       <transition name="fade">
-        <BaseNavbarTitle class="header-min" v-if="headerHidden" pageTitle="应用设置"/>
+        <BaseNavbarTitle class="header-min" v-show="headerHidden" titleText="应用设置"/>
       </transition>
     </BaseNavbar>
 	</div>
