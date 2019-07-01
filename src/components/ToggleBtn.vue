@@ -26,7 +26,6 @@ export default {
 <style>
 .toggle-btn.btn.btn-sm {
   font-size: .9rem;
-  color: #4f94cd;
 }
 .toggle-btn.btn.btn-sm span {
   display: inline-block;
@@ -37,11 +36,5 @@ export default {
 }
 .toggle-btn.btn.btn-sm .fa-caret-left {
   margin-right: .15rem;
-}
-.toggle-btn.btn.btn-sm.active {
-  color: white;
-}
-.toggle-btn.btn.btn-sm.active .disabled {
-  color: #a9a9a9;
 }
 </style>

@@ -13,6 +13,5 @@ export default {
 <style>
 .base-card {
 	position: relative;
-	background-color: white;
 }
 </style>

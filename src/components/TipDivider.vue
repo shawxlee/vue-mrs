@@ -27,7 +27,6 @@ export default {
   margin-bottom: 4.05rem;
   font-size: 1rem;
   line-height: 3;
-  color: #cfcfcf;
   text-align: center;
 }
 .tip-divider hr {

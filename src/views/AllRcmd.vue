@@ -70,9 +70,9 @@
 		<!-- 更新状态栏 -->
 		<transition name="pull">
 			<template v-if="showStatus">
-				<TipDivider class="mt-1 mb-0" v-if="isSuccess" tipText="更新成功" iconClass="fa-check-circle"/>
-				<TipDivider class="mt-1 mb-0" v-else-if="isError" tipText="更新失败" iconClass="fa-exclamation-circle"/>
-				<TipDivider class="mt-1 mb-0" v-else tipText="正在更新" iconClass="fa-sync-alt"/>
+				<TipDivider v-if="isSuccess" tipText="更新成功" iconClass="fa-check-circle"/>
+				<TipDivider v-else-if="isError" tipText="更新失败" iconClass="fa-exclamation-circle"/>
+				<TipDivider v-else tipText="正在更新" iconClass="fa-sync-alt"/>
 			</template>
 		</transition>
 
@@ -293,7 +293,7 @@
 <script>
 import $ from 'jquery'
 import axios from 'axios'
-import getData from '../api/index'
+import api from '../api/index'
 
 import BaseNavbar from '../components/BaseNavbar'
 import BaseNavbarTitle from '../components/BaseNavbarTitle'
@@ -721,10 +721,10 @@ export default {
   methods: {
     // 加载数据并显示状态：若成功则清除筛选信息，然后收起状态栏；否则显示错误提示
     loadData () {
-    	var self = this
-    	console.log('baseUrl:', axios.defaults.baseURL)
+    	console.log('baseUrl:', this.baseUrl)
 
-    	axios.all([getData.getFilms(), getData.getSeries()])
+    	var self = this
+    	axios.all([api.getFilms(), api.getSeries()])
     	.then(axios.spread(function (resFilms, resSeries) {
     		self.clearTags()
     		self.hideSearch()

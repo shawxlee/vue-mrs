@@ -21,10 +21,5 @@ export default {
   width: calc(100% + 1px);
   font-size: .9rem;
   white-space: nowrap;
-  color: #828282;
-}
-.scrollspy-nav-item.list-group-item.active {
-  background-color: #4f94cd;
-  border-color: #4f94cd;
 }
 </style>

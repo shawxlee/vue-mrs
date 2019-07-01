@@ -22,6 +22,5 @@ export default {
 .link-badge.badge {
   font-size: 1rem;
   font-weight: normal;
-  color: white;
 }
 </style>

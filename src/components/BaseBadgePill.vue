@@ -19,8 +19,6 @@ export default {
 	height: 1rem;
 	font-size: .8rem;
 	line-height: .8;
-	color: white;
-	background-color: #4f94cd;
 	transform: translateY(-.07rem);
 }
 </style>

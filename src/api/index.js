@@ -4,7 +4,7 @@ axios.defaults.baseURL = 'http://192.168.199.126:8080'
 axios.defaults.timeout = 5000
 
 var time = new Date().getTime()
-var getData = {
+var api = {
   getFilms () {
     return axios.get('/data/all-rcmd-films.json?t=' + time)
   },
@@ -13,4 +13,4 @@ var getData = {
   }
 }
 
-export default getData
+export default api

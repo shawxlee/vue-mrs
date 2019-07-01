@@ -20,6 +20,5 @@ export default {
 .base-navbar-toggler {
   width: calc(100% - 2.3rem);
   font-size: 1rem;
-  color: #4f94cd;
 }
 </style>

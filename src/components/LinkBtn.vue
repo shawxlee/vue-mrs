@@ -21,12 +21,5 @@ export default {
 <style>
 .link-btn.btn {
   width: 6rem;
-  color: white;
-  border-color: white;
-}
-.link-btn.btn.active {
-  color: #a9a9a9;
-  border-color: #a9a9a9;
-  background-color: transparent;
 }
 </style>

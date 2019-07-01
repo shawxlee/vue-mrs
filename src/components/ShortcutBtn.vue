@@ -26,9 +26,7 @@ export default {
   padding-top: .625rem;
   font-size: 1.25rem;
   line-height: 1;
-  color: white;
   text-align: center;
-  background-color: #1c1c1c;
   border-radius: 50%;
   opacity: .5;
 }

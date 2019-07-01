@@ -36,10 +36,6 @@ export default {
   width: 100%;
   font-size: .9rem;
   text-align: center;
-  color: #cfcfcf;
   transition: all .15s linear;
-}
-.img-modal span {
-  color: white;
 }
 </style>

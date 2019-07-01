@@ -24,7 +24,6 @@ export default {
   margin: auto;
   font-size: .8rem;
   text-align: center;
-  color: white;
 }
 .option-modal-item .btn {
   width: 2.5rem;
@@ -32,11 +31,7 @@ export default {
   padding-top: .625rem;
   font-size: 1.25rem;
   line-height: 1;
-  background-color: white;
   border: none;
   border-radius: 50%;
-}
-.option-modal-item i {
-  color: #4f94cd;
 }
 </style>

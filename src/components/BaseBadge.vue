@@ -20,8 +20,6 @@ export default {
 	top: 0;
 	left: .5rem;
 	font-size: .9rem;
-	color: #4f94cd;
-	background-color: rgba(255,255,255,.8);
 }
 .base-badge.badge span {
 	font-size: .8rem;

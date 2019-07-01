@@ -19,7 +19,6 @@ export default {
 	height: calc(100% - 8.05rem);
 	overflow-y: auto;
 	overflow-x: hidden;
-	background-color: white;
 	transition: transform .15s linear;
 }
 </style>

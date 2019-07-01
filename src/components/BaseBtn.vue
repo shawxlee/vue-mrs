@@ -16,9 +16,5 @@ export default {
 <style>
 .base-btn.btn.btn-sm {
   font-size: .9rem;
-  color: #4f94cd;
-}
-.base-btn.btn.btn-sm.active {
-	color: white;
 }
 </style>
