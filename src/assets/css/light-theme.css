@@ -1,0 +1,155 @@
+/* 浅色主题 */
+
+body,
+.form-control:focus,
+.form-control:active:focus,
+.form-control:active.focus,
+.form-control.active,
+.form-control.active:focus,
+.form-control.active.focus,
+.form-control.focus,
+#screen-collapse .btn-more {
+	background-color: #e8e8e8;
+}
+
+.navbar-toggler,
+.header .nav-link,
+.toggle-btn.btn.btn-sm.active .disabled,
+#screen-collapse .btn-more,
+.link-btn.btn.active,
+.footer .nav-link {
+	color: #a9a9a9;
+}
+
+.navbar-toggler.active,
+.base-navbar-toggler .navbar-toggler.active,
+.info-box h5,
+.bg-box,
+.accordion-toggler.collapsed h5,
+#series-mode h6 {
+	color: #1c1c1c;
+}
+
+.btn,
+.base-navbar-toggler,
+.base-navbar-toggler .navbar-toggler,
+.toggle-btn.btn.btn-sm,
+.base-btn.btn.btn-sm,
+.option-modal-item i,
+.scrollspy-nav-item.list-group-item.active .base-badge-pill.badge,
+#series-mode .base-badge.badge,
+.footer .nav-link.active {
+	color: #4f94cd;
+}
+
+.btn,
+.btn.active,
+.form-control:focus,
+.form-control:active:focus,
+.form-control:active.focus,
+.form-control.active,
+.form-control.active:focus,
+.form-control.active.focus,
+.form-control.focus,
+.scrollspy-nav-item.list-group-item.active {
+	border-color: #4f94cd;
+}
+
+.btn.active,
+.header,
+.header .nav-link.active,
+.toggle-btn.btn.btn-sm.active,
+.base-btn.btn.btn-sm.active,
+#full-mode .link-badge.badge,
+.img-modal span,
+.link-btn.btn,
+.option-modal-item,
+.accordion-toggler,
+.accordion-toggler .link-badge.badge,
+.scrollspy-nav-item.list-group-item .base-badge-pill.badge,
+.scrollspy-nav-item.list-group-item.active,
+.scrollspy-nav-item.list-group-item.active span:first-of-type,
+#series-mode .link-badge.badge,
+.shortcut-btn {
+	color: white;
+}
+
+.btn.active,
+.header,
+.accordion-toggler,
+.scrollspy-nav-item.list-group-item .base-badge-pill.badge,
+.scrollspy-nav-item.list-group-item.active {
+	background-color: #4f94cd;
+}
+
+.header .nav-link.active {
+	border-bottom: .1rem solid white;
+}
+
+.header .nav-link.active,
+.link-btn.btn.active {
+	background-color: transparent;
+}
+
+.toolbar,
+.base-card,
+.option-modal-item .btn,
+.accordion-toggler.collapsed,
+.scrollspy-nav-item.list-group-item,
+.scrollspy-nav-item.list-group-item.active .base-badge-pill.badge,
+.detail-modal .info-box,
+.footer {
+	background-color: white;
+}
+
+#screen-collapse .btn-more {
+	border-color: #e8e8e8;
+}
+
+.tip-divider,
+.img-modal p {
+	color: #cfcfcf;
+}
+
+.info-box,
+.bg-box i,
+.accordion-toggler.collapsed,
+.accordion-toggler.collapsed small,
+.scrollspy-nav-item.list-group-item,
+#series-mode h6 span,
+.detail-modal .info-box h6 {
+	color: #828282;
+}
+
+.bg-box {
+	background-color: #f5f5f5;
+}
+
+.link-btn.btn {
+	border-color: white;
+}
+
+.link-btn.btn.active {
+	border-color: #a9a9a9;
+}
+
+.option-modal {
+	background-color: rgba(0,0,0,.5);
+}
+
+.scrollspy-nav-item.list-group-item span:first-of-type {
+	color: #4f4f4f;
+}
+
+#series-mode .img-box {
+	box-shadow: .3rem .3rem .5rem rgba(0,0,0,.15);
+}
+
+#series-mode .base-badge.badge,
+.detail-modal .bg-box {
+	background-color: rgba(255,255,255,.8);
+}
+
+.shortcut-btn {
+	background-color: #1c1c1c;
+}

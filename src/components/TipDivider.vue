@@ -24,7 +24,7 @@ export default {
 .tip-divider {
   width: 100%;
   height: 3rem;
-  margin-bottom: 4.05rem;
+  margin-top: .25rem;
   font-size: 1rem;
   line-height: 3;
   text-align: center;

@@ -2,7 +2,7 @@
 	<div class="img-modal p-3 pb-1">
     <slot></slot>
     <br>
-    <p :class="{invisible: isTrue}">图片 <span>{{ imgName }}</span> 已保存到手机相册</p>
+    <p :class="{fade: isTrue}">图片 <span>{{ imgName }}</span> 已保存到手机相册</p>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
   width: 100%;
   font-size: .9rem;
   text-align: center;
-  transition: all .15s linear;
+  opacity: 0;
+  transition: opacity .15s linear;
 }
 </style>

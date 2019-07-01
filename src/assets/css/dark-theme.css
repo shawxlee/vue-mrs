@@ -1,0 +1,163 @@
+/* 深色主题 */
+
+body,
+.scrollspy-nav-item.list-group-item.active .base-badge-pill.badge {
+	background-color: #1c1c1c;
+}
+
+.border-top,
+.border-right,
+.border-bottom,
+.scrollspy-nav-item.list-group-item {
+	border-color: #495057 !important;
+}
+
+.form-control:focus,
+.form-control:active:focus,
+.form-control:active.focus,
+.form-control.active,
+.form-control.active:focus,
+.form-control.active.focus,
+.form-control.focus,
+#screen-collapse .btn-more {
+	background-color: #4f4f4f;
+}
+
+.header .nav-link,
+.scrollspy-nav-item.list-group-item,
+#series-mode h6 span {
+	color: #a9a9a9;
+}
+
+.navbar-toggler,
+.toggle-btn.btn.btn-sm.active .disabled,
+#screen-collapse .btn-more,
+.link-btn.btn.active,
+.footer .nav-link {
+	color: #9c9c9c;
+}
+
+.navbar-toggler.active,
+.base-navbar-toggler .navbar-toggler.active,
+.link-badge.badge,
+.info-box h5,
+.bg-box,
+.accordion-toggler.collapsed h5,
+#series-mode h6 {
+	color: white;
+}
+
+.btn,
+.base-navbar-toggler,
+.base-navbar-toggler .navbar-toggler,
+.toggle-btn.btn.btn-sm,
+.base-btn.btn.btn-sm,
+.option-modal-item i,
+.scrollspy-nav-item.list-group-item.active .base-badge-pill.badge,
+#series-mode .base-badge.badge,
+.footer .nav-link.active {
+	color: #4f94cd;
+}
+
+.btn,
+.btn.active,
+.form-control:focus,
+.form-control:active:focus,
+.form-control:active.focus,
+.form-control.active,
+.form-control.active:focus,
+.form-control.active.focus,
+.form-control.focus,
+.scrollspy-nav-item.list-group-item.active {
+	border-color: #4f94cd;
+}
+
+.btn.active,
+.header,
+.header .nav-link.active,
+.toggle-btn.btn.btn-sm.active,
+.base-btn.btn.btn-sm.active,
+.img-modal span,
+.link-btn.btn,
+.option-modal-item,
+.accordion-toggler,
+.scrollspy-nav-item.list-group-item .base-badge-pill.badge,
+.shortcut-btn {
+	color: #363636;
+}
+
+.scrollspy-nav-item.list-group-item.active,
+.scrollspy-nav-item.list-group-item.active span:first-of-type {
+	color: #1c1c1c;
+}
+
+.btn.active,
+.header,
+.accordion-toggler,
+.scrollspy-nav-item.list-group-item .base-badge-pill.badge,
+.scrollspy-nav-item.list-group-item.active {
+	background-color: #4f94cd;
+}
+
+.header .nav-link.active {
+	border-bottom: .1rem solid #363636;
+}
+
+.header .nav-link.active,
+.link-btn.btn.active {
+	background-color: transparent;
+}
+
+.toolbar,
+.base-card,
+.option-modal-item .btn,
+.accordion-toggler.collapsed,
+.scrollspy-nav-item.list-group-item,
+.detail-modal .info-box,
+.footer {
+	background-color: #363636;
+}
+
+#screen-collapse .btn-more {
+	border-color: #4f4f4f;
+}
+
+.tip-divider,
+.img-modal p,
+.scrollspy-nav-item.list-group-item span:first-of-type {
+	color: #cfcfcf;
+}
+
+.info-box,
+.bg-box i,
+.accordion-toggler.collapsed,
+.accordion-toggler.collapsed small,
+.detail-modal .info-box h6 {
+	color: #b5b5b5;
+}
+
+.bg-box {
+	background-color: #292929;
+}
+
+.link-btn.btn {
+	border-color: #363636;
+}
+
+.link-btn.btn.active {
+	border-color: #a9a9a9;
+}
+
+.option-modal,
+.shortcut-btn {
+	background-color: rgba(255,255,255,.8);
+}
+
+#series-mode .img-box {
+	box-shadow: .3rem .3rem .5rem rgba(0,0,0,.15);
+}
+
+#series-mode .base-badge.badge,
+.detail-modal .bg-box {
+	background-color: rgba(54,54,54,.8);
+}

@@ -5,7 +5,8 @@ import touch from './touch'
 // 引入CSS样式库
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.css'
-import './assets/light-theme.css'
+import './assets/css/common-style.css'
+import './assets/css/light-theme.css'
 // 引入JS脚本库
 import './assets/font-size.js'
 import 'bootstrap/dist/js/bootstrap.min.js'

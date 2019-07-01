@@ -1,5 +1,4 @@
 /*  全局样式  */
-
 * {
 	touch-action: auto !important;
 }
@@ -10,18 +9,11 @@ body {
 	margin: 0;
 	padding: 0;
 	padding-top: 6rem;
-	background-color: #e8e8e8;
 }
 .container-fluid {
 	padding: 0;
 }
-/* 折叠组件 */
-.navbar-toggler {
-	color: #a9a9a9;
-}
-.navbar-toggler.active {
-	color: #1c1c1c;
-}
+/* 折叠杆 */
 .navbar-toggler:focus,
 .navbar-toggler:active:focus,
 .navbar-toggler:active.focus,
@@ -34,14 +26,7 @@ body {
 /* 按钮 */
 .btn {
 	width: 100%;
-	color: #4f94cd;
-	border-color: #4f94cd;
 	border-radius: .3rem;
-}
-.btn.active {
-	color: white;
-	background-color: #4f94cd;
-	border-color: #4f94cd;
 }
 .btn:focus,
 .btn:active:focus,
@@ -57,7 +42,6 @@ body {
 	height: 2.4rem;
 	font-size: 1rem;
 	line-height: normal;
-	background-color: #e8e8e8;
 }
 .form-control:focus,
 .form-control:active:focus,
@@ -66,7 +50,6 @@ body {
 .form-control.active:focus,
 .form-control.active.focus,
 .form-control.focus {
-	border-color: #4f94cd;
 	box-shadow: none;
 	outline: none;
 }
@@ -76,8 +59,6 @@ body {
 /* 置顶栏 */
 .header {
 	height: 3rem;
-	color: white;
-	background-color: #4f94cd;
 	transition: transform .15s linear;
 }
 .upward {
@@ -88,12 +69,6 @@ body {
 	padding-top: .3rem;
 	font-size: .9rem;
 	line-height: 1;
-	color: #a9a9a9;
-}
-.header .nav-link.active {
-	color: white;
-	border-bottom: .1rem solid white;
-	background-color: transparent;
 }
 /* 缩小标题 */
 .header-min {
@@ -122,7 +97,6 @@ body {
 /* 工具栏 */
 .toolbar {
 	top: 3rem;
-	background-color: white;
 	transition: transform .15s linear;
 }
 /* 搜索框 */
@@ -159,45 +133,12 @@ body {
 .stretch-leave-active {
 	transition: all .3s linear;
 }
-/* 筛选器 */
-.base-navbar-toggler {
-	color: #4f94cd;
-}
-.base-navbar-toggler .navbar-toggler {
-	color: #4f94cd;
-}
-.base-navbar-toggler .navbar-toggler.active {
-	color: #1c1c1c;
-}
 /* 筛选面板 */
-.toggle-btn.btn.btn-sm {
-	color: #4f94cd;
-}
-.toggle-btn.btn.btn-sm.active {
-	color: white;
-}
-.toggle-btn.btn.btn-sm.active .disabled {
-	color: #a9a9a9;
-}
-.base-btn.btn.btn-sm {
-	color: #4f94cd;
-}
-.base-btn.btn.btn-sm.active {
-	color: white;
-}
-#screen-collapse .btn-more {
-	color: #a9a9a9;
-	background-color: #e8e8e8;
-	border-color: #e8e8e8;
-}
 #screen-collapse .navbar-toggler {
 	font-size: 1rem;
 }
 
 /* 更新状态栏 */
-.tip-divider {
-	color: #cfcfcf;
-}
 /* 动画：图标旋转 */
 .fa-sync-alt,
 .fa-sync {
@@ -227,26 +168,18 @@ body {
 }
 
 /* 全览模式 */
-.base-card {
-	background-color: white;
-}
 /* 评分 */
 #full-mode .link-badge.badge {
 	position: absolute;
 	top: .3rem;
 	right: .3rem;
-	color: white;
 }
 /* 信息 */
-.info-box {
-	color: #828282;
-}
 .info-box h5 {
 	margin-top: .1rem;
 	margin-bottom: .1rem;
 	font-weight: bold;
 	line-height: 1;
-	color: #1c1c1c;
 }
 .info-box h6 {
 	margin-top: 0;
@@ -256,12 +189,7 @@ body {
 	overflow-x: auto;
 }
 /* 评语 */
-.bg-box {
-	color: #1c1c1c;
-	background-color: #f5f5f5;
-}
 .bg-box i {
-	color: #828282;
 	opacity: .8;
 }
 .bg-box p:last-of-type {
@@ -270,50 +198,26 @@ body {
 	overflow-x: auto;
 }
 /* 大图 */
-.img-modal p {
-	color: #cfcfcf;
-}
-.img-modal span {
-	color: white;
-}
-.link-btn.btn {
-	color: white;
-	border-color: white;
-}
-.link-btn.btn.active {
-	color: #a9a9a9;
-	border-color: #a9a9a9;
-	background-color: transparent;
+.img-modal .fade {
+	opacity: 1;
 }
 /* 选项 */
-.option-modal {
-	background-color: rgba(0,0,0,.5);
-}
-.option-modal-item {
-	color: white;
-}
-.option-modal-item .btn {
-	background-color: white;
-}
-.option-modal-item i {
-	color: #4f94cd;
-}
 .option-modal-item .fa-pen {
 	font-size: 1.15rem;
+}
+/* 底部分割线 */
+.tab-content .tip-divider {
+	margin-top: 0;
+	margin-bottom: 4.05rem;
 }
 
 /* 简约模式 */
 /* 主体 */
-.accordion-toggler {
-	color: white;
-	background-color: #4f94cd;
-}
 .accordion-toggler h5 {
 	margin-bottom: .2rem;
 	font-weight: bold;
 }
 .accordion-toggler .link-badge.badge {
-	color: white;
 	transform: translateY(-.14rem);
 }
 .accordion-toggler small {
@@ -325,16 +229,6 @@ body {
 }
 .accordion-toggler i {
 	font-size: .8rem;
-}
-.accordion-toggler.collapsed {
-	color: #828282;
-	background-color: white;
-}
-.accordion-toggler.collapsed h5 {
-	color: #1c1c1c;
-}
-.accordion-toggler.collapsed small {
-	color: #828282;
 }
 /* 详情 */
 .accordion h6 {
@@ -353,55 +247,23 @@ body {
 
 /* 系列模式 */
 /* 导航 */
-.scrollspy-nav.list-group {
-	background-color: white;
-}
-.scrollspy-nav-item.list-group-item {
-	color: #828282;
-}
 .scrollspy-nav-item.list-group-item span:first-of-type {
 	font-size: 1rem;
 	font-weight: bold;
-	color: #4f4f4f;
-}
-.scrollspy-nav-item.list-group-item .base-badge-pill.badge {
-	color: white;
-	background-color: #4f94cd;
-}
-.scrollspy-nav-item.list-group-item.active {
-	background-color: #4f94cd;
-	border-color: #4f94cd;
-}
-.scrollspy-nav-item.list-group-item.active span:first-of-type {
-	color: white;
-}
-.scrollspy-nav-item.list-group-item.active .base-badge-pill.badge {
-	color: #4f94cd;
-	background-color: white;
 }
 /* 主体 */
 #series-mode .img-box {
 	width: 6.9rem;
 	height: 9.9rem;
-	box-shadow: .3rem .3rem .5rem rgba(0,0,0,.15);
-}
-#series-mode .base-badge.badge {
-	color: #4f94cd;
-	background-color: rgba(255,255,255,.8);
 }
 #series-mode .link-badge.badge {
 	position: absolute;
 	right: .3rem;
 	bottom: .3rem;
-	color: white;
 }
 #series-mode h6 {
 	width: 6.9rem;
 	margin: auto;
-	color: #1c1c1c;
-}
-#series-mode h6 span {
-	color: #828282;
 }
 #series-mode .option-modal {
 	top: -1rem;
@@ -440,31 +302,27 @@ body {
 	bottom: -1px;
 	left: 0;
 	width: 100%;
-	background-color: white;
-}
-.detail-modal .info-box h5 {
-	margin: 0;
-}
-.detail-modal .info-box h6 {
-	width: 100%;
-	margin-top: .45rem;
-	margin-bottom: 1rem;
-	color: #828282;
 }
 .detail-modal .info-box p {
 	margin-top: .45rem;
+	font-size: .9rem;
+	line-height: 1;
+}
+.detail-modal .info-box p:first-of-type {
+	font-size: 1rem;
+	font-weight: bold;
 }
 .detail-modal .bg-box {
 	position: absolute;
-	top: -2.4rem;
+	top: -2.8rem;
 	right: 0;
 	left: 0;
-	background-color: rgba(255,255,255,.8);
 	border-radius: 0;
 }
 .detail-modal .bg-box p {
 	margin-top: 0;
 	font-size: 1rem;
+	line-height: 2.4;
 }
 .detail-modal .bg-box p:last-of-type {
 	width: 100%;
@@ -480,10 +338,6 @@ body {
 }
 
 /* 快捷按钮 */
-.shortcut-btn {
-	color: white;
-	background-color: #1c1c1c;
-}
 #to-top.shortcut-btn {
 	bottom: 10.5rem;
 }

@@ -276,6 +276,9 @@ body {
 .img-modal span {
 	color: white;
 }
+.img-modal .fade {
+	opacity: 1;
+}
 .link-btn.btn {
 	color: white;
 	border-color: white;
@@ -300,6 +303,10 @@ body {
 }
 .option-modal-item .fa-pen {
 	font-size: 1.15rem;
+}
+.tab-content .tip-divider {
+	margin-top: 0;
+	margin-bottom: 4.05rem;
 }
 
 /* 简约模式 */
@@ -353,11 +360,9 @@ body {
 
 /* 系列模式 */
 /* 导航 */
-.scrollspy-nav.list-group {
-	background-color: white;
-}
 .scrollspy-nav-item.list-group-item {
 	color: #828282;
+	background-color: white;
 }
 .scrollspy-nav-item.list-group-item span:first-of-type {
 	font-size: 1rem;
@@ -494,4 +499,15 @@ body {
 /* 遮罩 */
 .bottom {
 	bottom: calc(3.8rem + 1px);
+}
+
+/* 底部导航栏 */
+.footer {
+  background-color: white;
+}
+.footer .nav-link {
+  color: #a9a9a9;
+}
+.footer .nav-link.active {
+  color: #4f94cd;
 }

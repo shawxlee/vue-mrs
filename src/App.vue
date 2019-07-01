@@ -28,17 +28,13 @@ export default {}
 <style>
 .footer {
   height: 3.8rem;
-  background-color: white;
 }
 .footer .nav-link {
   padding-top: .6rem;
   font-size: .8rem;
-  color: #a9a9a9;
 }
 .footer .nav-link i {
   font-size: 1.5rem;
 }
-.footer .nav-link.active {
-  color: #4f94cd;
-}
+
 </style>
