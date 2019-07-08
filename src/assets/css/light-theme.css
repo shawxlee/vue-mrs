@@ -1,13 +1,6 @@
 /* 浅色主题 */
 
 body,
-.form-control:focus,
-.form-control:active:focus,
-.form-control:active.focus,
-.form-control.active,
-.form-control.active:focus,
-.form-control.active.focus,
-.form-control.focus,
 #screen-collapse .btn-more {
 	background-color: #e8e8e8;
 }

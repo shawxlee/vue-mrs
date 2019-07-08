@@ -37,258 +37,258 @@
 					<SearchInput :style="[isFocus ? '' : {width: searchText.length + 4 + 'rem'}]" v-if="showSearch" v-model.trim="searchText" @focus.native="isFocus = true" @blur.native="isFocus = false" v-focus/>
 				</transition>
 				<IconBtn :class="{active: isFocus}" :iconClass="searchText.length > 0 ? 'fa-times-circle' : 'fa-search'" @mousedown.native.prevent @click.native="onSearch"/>
-			</BaseNavbarForm>
+				</BaseNavbarForm>
 
-			<!-- 筛选面板 -->
-			<BaseNavbarCollapse id="screen-collapse">
-				<div class="row no-gutters justify-content-between">
-					<!-- 排序按钮 -->
-					<div class="col-4 px-1">
-						<ToggleBtn :class="{active: sortOrder === 1}" sortName="年份" :isTrue="isReverse" @click.native="onSort(1)"/>
+				<!-- 筛选面板 -->
+				<BaseNavbarCollapse id="screen-collapse">
+					<div class="row no-gutters justify-content-between">
+						<!-- 排序按钮 -->
+						<div class="col-4 px-1">
+							<ToggleBtn :class="{active: sortOrder === 1}" sortName="年份" :isTrue="isReverse" @click.native="onSort(1)"/>
+						</div>
+						<div class="col-4 px-1">
+							<ToggleBtn :class="{active: sortOrder === 2}" sortName="评分" :isTrue="isReverse" @click.native="onSort(2)"/>
+						</div>
+						<div class="col-4 px-1">
+							<ToggleBtn :class="{active: sortOrder === 3}" sortName="更新" :isTrue="isReverse" @click.native="onSort(3)"/>
+						</div>
+						<div class="w-100"><hr></div>
+						<!-- 过滤标签 -->
+						<div class="col-2 p-1" v-for="(item, index) in filterTags" :key="'filterTag_' + index">
+							<BaseBtn :class="{active: item.isActive}" :btnText="item.tag" @click.native="onTag(item)"/>
+						</div>
+						<div class="col-2 p-1" v-show="moreHidden">
+							<BaseBtn class="btn-more" btnText="更多" @click.native="moreHidden = false"/>
+						</div>
+						<div class="w-100 mt-1 text-center">
+							<IconBtn :class="{invisible: activeTags.length === 0}" iconClass="fa-times-circle mt-1" @click.native="clearTags"> 清空标签</IconBtn>
+						</div>
 					</div>
-					<div class="col-4 px-1">
-						<ToggleBtn :class="{active: sortOrder === 2}" sortName="评分" :isTrue="isReverse" @click.native="onSort(2)"/>
-					</div>
-					<div class="col-4 px-1">
-						<ToggleBtn :class="{active: sortOrder === 3}" sortName="更新" :isTrue="isReverse" @click.native="onSort(3)"/>
-					</div>
-					<div class="w-100"><hr></div>
-					<!-- 过滤标签 -->
-					<div class="col-2 p-1" v-for="(item, index) in filterTags" :key="'filterTag_' + index">
-						<BaseBtn :class="{active: item.isActive}" :btnText="item.tag" @click.native="onTag(item)"/>
-					</div>
-					<div class="col-2 p-1" v-show="moreHidden">
-						<BaseBtn class="btn-more" btnText="更多" @click.native="moreHidden = false"/>
-					</div>
-					<div class="w-100 mt-1 text-center">
-						<IconBtn :class="{invisible: activeTags.length === 0}" iconClass="fa-times-circle mt-1" @click.native="clearTags"> 清空标签</IconBtn>
-					</div>
-				</div>
-			</BaseNavbarCollapse>
-		</BaseNavbar>
+				</BaseNavbarCollapse>
+			</BaseNavbar>
 
-		<!-- 更新状态栏 -->
-		<transition name="pull">
-			<template v-if="showStatus">
-				<TipDivider v-if="isSuccess" tipText="更新成功" iconClass="fa-check-circle"/>
-				<TipDivider v-else-if="isError" tipText="更新失败" iconClass="fa-exclamation-circle"/>
-				<TipDivider v-else tipText="正在更新" iconClass="fa-sync-alt"/>
-			</template>
-		</transition>
+			<!-- 更新状态栏 -->
+			<transition name="pull">
+				<template v-if="showStatus">
+					<TipDivider v-if="isSuccess" tipText="更新成功" iconClass="fa-check-circle"/>
+					<TipDivider v-else-if="isError" tipText="更新失败" iconClass="fa-exclamation-circle"/>
+					<TipDivider v-else tipText="正在更新" iconClass="fa-sync-alt"/>
+				</template>
+			</transition>
 
-		<!-- 电影列表 -->
-		<TabContent @click.native="onFold">
-			<!-- 全览模式 -->
-			<TabContentPane id="full-mode" isTrue>
-				<v-touch @swipeup="swipeUp" @swipedown="swipeDown">
-					<BaseCard class="my-1 p-3" v-for="item in filterFilms" :key="'filterFilm_' + item.id">
-						<v-touch @press="filmOrder = item.id">
-							<FlexBox>
-								<!-- 海报 -->
-								<ImgBox>
-									<img :src="baseUrl + item.posterUrl" width="100%" height="100%" @click="posterOrder = item.id">
-									<!-- 评分 -->
-									<LinkBadge :style="{'background-color': getColor(item)}" :webUrl="item.doubanUrl" :badgeText="item.score"/>
-								</ImgBox>
-								<!-- 信息 -->
-								<InfoBox class="pl-2">
-									<h5>{{ item.transName }}</h5>
-									<h6>{{ item.offiName }}</h6>
-									<InfoBoxItem infoTitle="类型" :infoCont="item.type"/>
-									<InfoBoxItem infoTitle="年份" :infoCont="item.year"/>
-									<InfoBoxItem infoTitle="地区" :infoCont="item.country"/>
-									<InfoBoxItem infoTitle="导演" :infoCont="item.director"/>
-									<InfoBoxItem infoTitle="主演" :infoCont="item.star"/>
-								</InfoBox>
-							</FlexBox>
-							<!-- 评语 -->
-							<BgBox>
-								<FlexBox>
-									<p><i class="fas fa-comment-dots mr-2"></i></p>
-									<p>{{ item.comment }}</p>
-								</FlexBox>
-							</BgBox>
-
-							<!-- 查看大图 -->
-							<ImgModal v-show="posterOrder === item.id" :isTrue="showTip" :imgName="item.transName" @click.native.self="posterOrder = 0">
-								<img :src="baseUrl + item.posterUrl" width="100%" @click="posterOrder = 0">
-								<br><br>
-								<LinkBtn :class="{active: isSave}" :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.native="onSave"/>
-							</ImgModal>
-							<!-- 弹出选项 -->
-							<OptionModal v-if="filmOrder === item.id">
-								<OptionModalItem iconClass="fa-plus" optText="加入待看" @click.native="onOption(1)"/>
-								<OptionModalItem iconClass="fa-check" optText="标记已看" @click.native="onOption(2)"/>
-								<OptionModalItem iconClass="fa-thumbtack" optText="添加笔记" @click.native="onOption(3)"/>
-								<OptionModalItem iconClass="fa-pen" optText="撰写影评" @click.native="onOption(4)"/>
-							</OptionModal>
-						</v-touch>
-					</BaseCard>
-
-					<!-- 底部分割线 -->
-					<template v-if="films.length > 0">
-						<TipDivider v-if="filterFilms.length > 0" tipText="已到底部" iconClass="fa-hourglass-end"/>
-						<TipDivider v-else tipText="暂无匹配" iconClass="fa-ban"/>
-					</template>
-				</v-touch>
-			</TabContentPane>
-
-			<!-- 简约模式 -->
-			<TabContentPane class="accordion" id="mini-mode">
-				<v-touch @swipeup="swipeUp" @swipedown="swipeDown">
-					<BaseCard class="m-1 rounded-lg overflow-hidden" v-for="item in filterFilms" :key="'filterFilm_' + item.id">
-						<v-touch @press="filmOrder = item.id">
-							<!-- 主体 -->
-							<AccordionToggler :tarId="'#info_' + item.id">
-								<h5><LinkBadge :style="{'background-color': getColor(item)}" :webUrl="item.doubanUrl" :badgeText="item.score"/> {{ item.transName }} <small>({{ item.year }})</small></h5>
-								<p><i class="fas fa-tag mr-2 mb-0"></i>{{ item.type }}</p>
-							</AccordionToggler>
-							<!-- 展开详情 -->
-							<AccordionCollapse :id="'info_' + item.id" parId="#mini-mode">
+			<!-- 电影列表 -->
+			<TabContent @click.native="onFold">
+				<!-- 全览模式 -->
+				<TabContentPane id="full-mode" isTrue>
+					<v-touch @swipeup="swipeUp" @swipedown="swipeDown">
+						<BaseCard class="my-1 p-3" v-for="item in filterFilms" :key="'filterFilm_' + item.id">
+							<v-touch @press="filmOrder = item.id">
 								<FlexBox>
 									<!-- 海报 -->
 									<ImgBox>
 										<img :src="baseUrl + item.posterUrl" width="100%" height="100%" @click="posterOrder = item.id">
+										<!-- 评分 -->
+										<LinkBadge :style="{'background-color': getColor(item)}" :webUrl="item.doubanUrl" :badgeText="item.score"/>
 									</ImgBox>
 									<!-- 信息 -->
 									<InfoBox class="pl-2">
+										<h5>{{ item.transName }}</h5>
 										<h6>{{ item.offiName }}</h6>
+										<InfoBoxItem infoTitle="类型" :infoCont="item.type"/>
+										<InfoBoxItem infoTitle="年份" :infoCont="item.year"/>
 										<InfoBoxItem infoTitle="地区" :infoCont="item.country"/>
 										<InfoBoxItem infoTitle="导演" :infoCont="item.director"/>
 										<InfoBoxItem infoTitle="主演" :infoCont="item.star"/>
-										<BgBox><i class="fas fa-comment-dots mr-2"></i>{{ item.comment }}</BgBox>
 									</InfoBox>
 								</FlexBox>
-							</AccordionCollapse>
+								<!-- 评语 -->
+								<BgBox>
+									<FlexBox>
+										<p><i class="fas fa-comment-dots mr-2"></i></p>
+										<p>{{ item.comment }}</p>
+									</FlexBox>
+								</BgBox>
 
-							<!-- 查看大图 -->
-							<ImgModal v-show="posterOrder === item.id" :isTrue="showTip" :imgName="item.transName" @click.native.self="posterOrder = 0">
-								<img :src="baseUrl + item.posterUrl" width="100%" @click="posterOrder = 0">
-								<br><br>
-								<LinkBtn :class="{active: isSave}" :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.native="onSave"/>
-							</ImgModal>
-							<!-- 弹出选项 -->
-							<OptionModal v-if="filmOrder === item.id">
-								<OptionModalItem iconClass="fa-plus" optText="加入待看" @click.native="onOption(1)"/>
-								<OptionModalItem iconClass="fa-check" optText="标记已看" @click.native="onOption(2)"/>
-								<OptionModalItem iconClass="fa-thumbtack" optText="添加笔记" @click.native="onOption(3)"/>
-								<OptionModalItem iconClass="fa-pen" optText="撰写影评" @click.native="onOption(4)"/>
-							</OptionModal>
-						</v-touch>
-					</BaseCard>
-
-					<!-- 底部分割线 -->
-					<template v-if="films.length > 0">
-						<TipDivider v-if="filterFilms.length > 0" tipText="已到底部" iconClass="fa-hourglass-end"/>
-						<TipDivider v-else tipText="暂无匹配" iconClass="fa-ban"/>
-					</template>
-				</v-touch>
-			</TabContentPane>
-
-			<!-- 系列模式 -->
-			<TabContentPane id="series-mode">
-				<div class="row no-gutters">
-					<div class="col-4">
-						<!-- 导航 -->
-						<ScrollspyNav :class="{upward: headerHidden}" id="series-nav">
-							<ScrollspyNavItem v-for="item in filterSeries" :key="'filterSeries_' + item.seriesId" :scrId="'#series_' + item.seriesId">
-								<!-- 有系列 -->
-								<template v-if="item.filmList.length > 1">
-									<span><i class="fas fa-caret-right"></i> {{ item.seriesName }}</span>
-									<BaseBadgePill :badgeNumber="item.filmList.length"/>
-									<br>
-									{{ item.firstYear }} - {{ item.filmList[item.filmList.length - 1].year }}
-									<br>
-									系列最佳 {{ item.topScore }} 分
-								</template>
-								<!-- 无系列 -->
-								<template v-else>
-									<span>{{ item.seriesName }}</span>
-									<br>
-									{{ item.firstYear }} / {{ item.topScore }}
-								</template>
-							</ScrollspyNavItem>
-						</ScrollspyNav>
-					</div>
-					<!-- 内容 -->
-					<v-touch class="col-8" @swipeup="swipeUp" @swipedown="swipeDown">
-						<BaseCard class="my-1 p-2" v-for="item in filterSeries" :key="'filterSeries_' + item.seriesId">
-							<IdAnchor :id="'series_' + item.seriesId"/>
-							<div class="row no-gutters">
-								<v-touch class="col-6 my-2 position-relative" v-for="(film, index) in item.filmList" :key="'film_' + film.id" @press="detailOrder = 0; filmOrder = film.id">
-									<!-- 海报 -->
-									<ImgBox class="mx-auto mb-2">
-										<img :src="baseUrl + film.posterUrl" width="100%" height="100%" @click="detailOrder = film.id">
-										<!-- 评分 -->
-										<LinkBadge :style="{'background-color': getColor(film)}" :webUrl="film.doubanUrl" :badgeText="film.score"/>
-									</ImgBox>
-									<!-- 标题 -->
-									<h6>{{ film.transName }} <span>({{ film.year }})</span></h6>
-									<!-- 编号 -->
-									<BaseBadge :badgeNumber="index + 1"/>
-
-									<!-- 选项 -->
-									<OptionModal class="flex-wrap" v-if="filmOrder === film.id">
-										<OptionModalItem iconClass="fa-plus" @click.native="onOption(1)">加入<br>待看</OptionModalItem>
-										<OptionModalItem iconClass="fa-check" @click.native="onOption(2)">标记<br>已看</OptionModalItem>
-										<OptionModalItem iconClass="fa-thumbtack" @click.native="onOption(3)">添加<br>笔记</OptionModalItem>
-										<OptionModalItem iconClass="fa-pen" @click.native="onOption(4)">撰写<br>影评</OptionModalItem>
-									</OptionModal>
-
-									<!-- 查看详情 -->
-									<transition name="slide">
-										<DetailModal :class="{top: showPoster}" v-show="detailOrder === film.id">
-											<!-- 底图 -->
-											<img :class="{scale: showPoster}" :src="baseUrl + film.posterUrl" width="100%" @click="showPoster = !showPoster">
-											<!-- 信息 -->
-											<transition name="slide">
-												<InfoBox class="pt-3 px-3" v-show="!showPoster" @click.native="detailOrder = 0">
-													<h5>{{ film.transName }}</h5>
-													<p>{{ film.offiName }}</p>
-													<p>类型：{{ film.type }}</p>
-													<p>年份：{{ film.year }}</p>
-													<p>地区：{{ film.country }}</p>
-													<p>导演：{{ film.director }}</p>
-													<p>主演：{{ film.star }}</p>
-													<!-- 评语 -->
-													<BgBox>
-														<FlexBox>
-															<p><i class="fas fa-comment-dots mr-2"></i></p>
-															<p>{{ film.comment }}</p>
-														</FlexBox>
-													</BgBox>
-												</InfoBox>
-											</transition>
-
-											<!-- 查看大图 -->
-											<ImgModal v-show="showPoster" :isTrue="showTip" :imgName="film.transName" @click.native.self="detailOrder = 0">
-												<LinkBtn :class="{active: isSave}" :imgUrl="baseUrl + film.posterUrl" :imgName="film.transName" @click.native="onSave"/>
-											</ImgModal>
-										</DetailModal>
-									</transition>
-								</v-touch>
-							</div>
+								<!-- 查看大图 -->
+								<ImgModal v-show="posterOrder === item.id" :isTrue="showTip" :imgName="item.transName" @click.native.self="posterOrder = 0">
+									<img :src="baseUrl + item.posterUrl" width="100%" @click="posterOrder = 0">
+									<br><br>
+									<LinkBtn :class="{active: isSave}" :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.native="onSave"/>
+								</ImgModal>
+								<!-- 弹出选项 -->
+								<OptionModal v-if="filmOrder === item.id">
+									<OptionModalItem iconClass="fa-plus" optText="加入待看" @click.native="onOption(1)"/>
+									<OptionModalItem iconClass="fa-check" optText="标记已看" @click.native="onOption(2)"/>
+									<OptionModalItem iconClass="fa-thumbtack" optText="添加笔记" @click.native="onOption(3)"/>
+									<OptionModalItem iconClass="fa-pen" optText="撰写影评" @click.native="onOption(4)"/>
+								</OptionModal>
+							</v-touch>
 						</BaseCard>
 
 						<!-- 底部分割线 -->
-						<template v-if="series.length > 0">
-							<TipDivider v-if="filterSeries.length > 0" tipText="已到底部" iconClass="fa-hourglass-end"/>
-							<TipDivider v-else tipText="暂无匹配" iconClass="fa-ban"/>
-						</template>
-					</v-touch>
-				</div>
-			</TabContentPane>
-		</TabContent>
+						<template v-if="films.length > 0">
+							<TipDivider v-if="filterFilms.length > 0" tipText="已到底部" iconClass="fa-hourglass-end"/>
+								<TipDivider v-else tipText="暂无匹配" iconClass="fa-ban"/>
+							</template>
+						</v-touch>
+					</TabContentPane>
 
-		<!-- 快捷按钮 -->
-		<ShortcutBtn id="to-top" iconClass="fa-chevron-up" @click.native="onTop"/>
-		<ShortcutBtn v-show="showReload" :iconClass="isReload ? 'fa-sync-alt' : 'fa-redo-alt'" @click.native="onReload"/>
-		<ShortcutBtn id="to-bottom" iconClass="fa-chevron-down" @click.native="onBottom"/>
+					<!-- 简约模式 -->
+					<TabContentPane class="accordion" id="mini-mode">
+						<v-touch @swipeup="swipeUp" @swipedown="swipeDown">
+							<BaseCard class="m-1 rounded-lg overflow-hidden" v-for="item in filterFilms" :key="'filterFilm_' + item.id">
+								<v-touch @press="filmOrder = item.id">
+									<!-- 主体 -->
+									<AccordionToggler :tarId="'#info_' + item.id">
+										<h5><LinkBadge :style="{'background-color': getColor(item)}" :webUrl="item.doubanUrl" :badgeText="item.score"/> {{ item.transName }} <small>({{ item.year }})</small></h5>
+										<p><i class="fas fa-tag mr-2 mb-0"></i>{{ item.type }}</p>
+									</AccordionToggler>
+									<!-- 展开详情 -->
+									<AccordionCollapse :id="'info_' + item.id" parId="#mini-mode">
+										<FlexBox>
+											<!-- 海报 -->
+											<ImgBox>
+												<img :src="baseUrl + item.posterUrl" width="100%" height="100%" @click="posterOrder = item.id">
+											</ImgBox>
+											<!-- 信息 -->
+											<InfoBox class="pl-2">
+												<h6>{{ item.offiName }}</h6>
+												<InfoBoxItem infoTitle="地区" :infoCont="item.country"/>
+												<InfoBoxItem infoTitle="导演" :infoCont="item.director"/>
+												<InfoBoxItem infoTitle="主演" :infoCont="item.star"/>
+												<BgBox><i class="fas fa-comment-dots mr-2"></i>{{ item.comment }}</BgBox>
+											</InfoBox>
+										</FlexBox>
+									</AccordionCollapse>
 
-		<!-- 遮罩 -->
-		<BaseBackdrop :class="{bottom: detailOrder > 0 && !showPoster}" v-show="posterOrder > 0 || detailOrder > 0" @click.native="detailOrder = 0"/>
-	</div>
-</template>
+									<!-- 查看大图 -->
+									<ImgModal v-show="posterOrder === item.id" :isTrue="showTip" :imgName="item.transName" @click.native.self="posterOrder = 0">
+										<img :src="baseUrl + item.posterUrl" width="100%" @click="posterOrder = 0">
+										<br><br>
+										<LinkBtn :class="{active: isSave}" :imgUrl="baseUrl + item.posterUrl" :imgName="item.transName" @click.native="onSave"/>
+									</ImgModal>
+									<!-- 弹出选项 -->
+									<OptionModal v-if="filmOrder === item.id">
+										<OptionModalItem iconClass="fa-plus" optText="加入待看" @click.native="onOption(1)"/>
+										<OptionModalItem iconClass="fa-check" optText="标记已看" @click.native="onOption(2)"/>
+										<OptionModalItem iconClass="fa-thumbtack" optText="添加笔记" @click.native="onOption(3)"/>
+										<OptionModalItem iconClass="fa-pen" optText="撰写影评" @click.native="onOption(4)"/>
+									</OptionModal>
+								</v-touch>
+							</BaseCard>
+
+							<!-- 底部分割线 -->
+							<template v-if="films.length > 0">
+								<TipDivider v-if="filterFilms.length > 0" tipText="已到底部" iconClass="fa-hourglass-end"/>
+									<TipDivider v-else tipText="暂无匹配" iconClass="fa-ban"/>
+								</template>
+							</v-touch>
+						</TabContentPane>
+
+						<!-- 系列模式 -->
+						<TabContentPane id="series-mode">
+							<div class="row no-gutters">
+								<div class="col-4">
+									<!-- 导航 -->
+									<ScrollspyNav :class="{upward: headerHidden}" id="series-nav">
+										<ScrollspyNavItem v-for="item in filterSeries" :key="'filterSeries_' + item.seriesId" :scrId="'#series_' + item.seriesId">
+											<!-- 有系列 -->
+											<template v-if="item.filmList.length > 1">
+												<span><i class="fas fa-caret-right"></i> {{ item.seriesName }}</span>
+												<BaseBadgePill :badgeNumber="item.filmList.length"/>
+												<br>
+												{{ item.firstYear }} - {{ item.filmList[item.filmList.length - 1].year }}
+												<br>
+												系列最佳 {{ item.topScore }} 分
+											</template>
+											<!-- 无系列 -->
+											<template v-else>
+												<span>{{ item.seriesName }}</span>
+												<br>
+												{{ item.firstYear }} / {{ item.topScore }}
+											</template>
+										</ScrollspyNavItem>
+									</ScrollspyNav>
+								</div>
+								<!-- 内容 -->
+								<v-touch class="col-8" @swipeup="swipeUp" @swipedown="swipeDown">
+									<BaseCard class="my-1 p-2" v-for="item in filterSeries" :key="'filterSeries_' + item.seriesId">
+										<IdAnchor :id="'series_' + item.seriesId"/>
+										<div class="row no-gutters">
+											<v-touch class="col-6 my-2 position-relative" v-for="(film, index) in item.filmList" :key="'film_' + film.id" @press="detailOrder = 0; filmOrder = film.id">
+												<!-- 海报 -->
+												<ImgBox class="mx-auto mb-2">
+													<img :src="baseUrl + film.posterUrl" width="100%" height="100%" @click="detailOrder = film.id">
+													<!-- 评分 -->
+													<LinkBadge :style="{'background-color': getColor(film)}" :webUrl="film.doubanUrl" :badgeText="film.score"/>
+												</ImgBox>
+												<!-- 标题 -->
+												<h6>{{ film.transName }} <span>({{ film.year }})</span></h6>
+												<!-- 编号 -->
+												<BaseBadge :badgeNumber="index + 1"/>
+
+												<!-- 选项 -->
+												<OptionModal class="flex-wrap" v-if="filmOrder === film.id">
+													<OptionModalItem iconClass="fa-plus" @click.native="onOption(1)">加入<br>待看</OptionModalItem>
+													<OptionModalItem iconClass="fa-check" @click.native="onOption(2)">标记<br>已看</OptionModalItem>
+													<OptionModalItem iconClass="fa-thumbtack" @click.native="onOption(3)">添加<br>笔记</OptionModalItem>
+													<OptionModalItem iconClass="fa-pen" @click.native="onOption(4)">撰写<br>影评</OptionModalItem>
+												</OptionModal>
+
+												<!-- 查看详情 -->
+												<transition name="slide">
+													<DetailModal :class="{top: showPoster}" v-show="detailOrder === film.id">
+														<!-- 底图 -->
+														<img :class="{scale: showPoster}" :src="baseUrl + film.posterUrl" width="100%" @click="showPoster = !showPoster">
+														<!-- 信息 -->
+														<transition name="slide">
+															<InfoBox class="pt-3 px-3" v-show="!showPoster" @click.native="detailOrder = 0">
+																<h5>{{ film.transName }}</h5>
+																<p>{{ film.offiName }}</p>
+																<p>类型：{{ film.type }}</p>
+																<p>年份：{{ film.year }}</p>
+																<p>地区：{{ film.country }}</p>
+																<p>导演：{{ film.director }}</p>
+																<p>主演：{{ film.star }}</p>
+																<!-- 评语 -->
+																<BgBox>
+																	<FlexBox>
+																		<p><i class="fas fa-comment-dots mr-2"></i></p>
+																		<p>{{ film.comment }}</p>
+																	</FlexBox>
+																</BgBox>
+															</InfoBox>
+														</transition>
+
+														<!-- 查看大图 -->
+														<ImgModal v-show="showPoster" :isTrue="showTip" :imgName="film.transName" @click.native.self="detailOrder = 0">
+															<LinkBtn :class="{active: isSave}" :imgUrl="baseUrl + film.posterUrl" :imgName="film.transName" @click.native="onSave"/>
+														</ImgModal>
+													</DetailModal>
+												</transition>
+											</v-touch>
+										</div>
+									</BaseCard>
+
+									<!-- 底部分割线 -->
+									<template v-if="series.length > 0">
+										<TipDivider v-if="filterSeries.length > 0" tipText="已到底部" iconClass="fa-hourglass-end"/>
+											<TipDivider v-else tipText="暂无匹配" iconClass="fa-ban"/>
+										</template>
+									</v-touch>
+								</div>
+							</TabContentPane>
+						</TabContent>
+
+						<!-- 快捷按钮 -->
+						<ShortcutBtn id="to-top" iconClass="fa-chevron-up" @click.native="onTop"/>
+						<ShortcutBtn v-show="showReload" :iconClass="isReload ? 'fa-sync-alt' : 'fa-redo-alt'" @click.native="onReload"/>
+						<ShortcutBtn id="to-bottom" iconClass="fa-chevron-down" @click.native="onBottom"/>
+
+						<!-- 遮罩 -->
+						<BaseBackdrop :class="{bottom: detailOrder > 0 && !showPoster}" v-show="posterOrder > 0 || detailOrder > 0" @click.native="detailOrder = 0"/>
+						</div>
+					</template>
 
 <script>
 import $ from 'jquery'
@@ -562,37 +562,35 @@ export default {
     		}
     	})
     },
-    // 电影过滤：评分级别/类型标签/搜索文本
+    // 电影过滤：类型标签/搜索文本
     filterFilms () {
     	var activeTags = this.activeTags
     	var searchText = this.searchText
 
     	return this.sortFilms.filter(function (item) {
     		if (activeTags.length > 0) {
-          // 标签：遍历每一个选中标签，返回包含至少一个标签的所有项
-          let i, len
-          for (i = 0, len = activeTags.length; i < len; i++) {
-          	if (item.type.includes(activeTags[i])) {
-          		return true
-          	}
-          }
-        } else if (searchText.length > 0) {
-          // 搜索：将搜索文本按空格分割为关键词，清除数据文本的所有标点符号，返回包含至少一个关键词的所有项
-          var stArr = searchText.split(' ')
-          var keys = [item.transName, item.year, item.offiName, item.country, item.type, item.director, item.star, item.comment]
+    			let i, len
+    			for (i = 0, len = activeTags.length; i < len; i++) {
+    				if (item.type.includes(activeTags[i])) {
+    					return true
+    				}
+    			}
+    		} else if (searchText.length > 0) {
+    			var stArr = searchText.split(' ')
+    			var keys = [item.transName, item.year, item.offiName, item.country, item.type, item.director, item.star, item.comment]
 
-          let i, lenI, j, lenJ
-          for (i = 0, lenI = stArr.length; i < lenI; i++) {
-          	for (j = 0, lenJ = keys.length; j < lenJ; j++) {
-          		if (keys[j].replace(/[ / ·，“”……：]+/g, '').toLowerCase().includes(stArr[i].toLowerCase())) {
-          			return true
-          		}
-          	}
-          }
-        } else {
-      	return true
-        }
-      })
+    			let i, lenI, j, lenJ
+    			for (i = 0, lenI = stArr.length; i < lenI; i++) {
+    				for (j = 0, lenJ = keys.length; j < lenJ; j++) {
+    					if (keys[j].replace(/[ / ·，“”……：]+/g, '').toLowerCase().includes(stArr[i].toLowerCase())) {
+    						return true
+    					}
+    				}
+    			}
+    		} else {
+    			return true
+    		}
+    	})
     },
     // 系列排序：年份/评分/更新
     sortSeries () {
@@ -625,34 +623,32 @@ export default {
     	return this.sortSeries.filter(function (item) {
     		var filmList = item.filmList
     		if (activeTags.length > 0) {
-          // 标签：遍历每一个选中标签，返回包含至少一个标签的所有项
-          let i, lenI, j, lenJ
-          for (i = 0, lenI = activeTags.length; i < lenI; i++) {
-          	for (j = 0, lenJ = filmList.length; j < lenJ; j++) {
-          		if (filmList[j].type.includes(activeTags[i])) {
-          			return true
-          		}
-          	}
-          }
-        } else if (searchText.length > 0) {
-          // 搜索：将搜索文本按空格分割为关键词，清除数据文本的所有标点符号，返回包含至少一个关键词的所有项
-          var stArr = searchText.split(' ')
+    			let i, lenI, j, lenJ
+    			for (i = 0, lenI = activeTags.length; i < lenI; i++) {
+    				for (j = 0, lenJ = filmList.length; j < lenJ; j++) {
+    					if (filmList[j].type.includes(activeTags[i])) {
+    						return true
+    					}
+    				}
+    			}
+    		} else if (searchText.length > 0) {
+    			var stArr = searchText.split(' ')
 
-          let i, lenI, j, lenJ, k, lenK
-          for (i = 0, lenI = stArr.length; i < lenI; i++) {
-          	for (j = 0, lenJ = filmList.length; j < lenJ; j++) {
-          		var keys = [filmList[j].transName, filmList[j].year, filmList[j].offiName, filmList[j].country, filmList[j].type, filmList[j].director, filmList[j].star, filmList[j].comment]
-          		for (k = 0, lenK = keys.length; k < lenK; k++) {
-          			if (keys[k].replace(/[ / ·，“”……：]+/g, '').toLowerCase().includes(stArr[i].toLowerCase())) {
-          				return true
-          			}
-          		}
-          	}
-          }
-        } else {
-      	return true
-        }
-      })
+    			let i, lenI, j, lenJ, k, lenK
+    			for (i = 0, lenI = stArr.length; i < lenI; i++) {
+    				for (j = 0, lenJ = filmList.length; j < lenJ; j++) {
+    					var keys = [filmList[j].transName, filmList[j].year, filmList[j].offiName, filmList[j].country, filmList[j].type, filmList[j].director, filmList[j].star, filmList[j].comment]
+    					for (k = 0, lenK = keys.length; k < lenK; k++) {
+    						if (keys[k].replace(/[ / ·，“”……：]+/g, '').toLowerCase().includes(stArr[i].toLowerCase())) {
+    							return true
+    						}
+    					}
+    				}
+    			}
+    		} else {
+    			return true
+    		}
+    	})
     }
   },
   watch: {
@@ -668,24 +664,20 @@ export default {
     }
   },
   created () {
-  	console.log('baseUrl:', this.baseUrl)
+    console.log('baseUrl:', this.baseUrl)
   },
   mounted () {
-  	var toTop = $('#to-top')
-    var toBottom = $('#to-bottom')
-  	toTop.fadeOut('fast')
-  	toBottom.fadeOut('fast')
   	// 初始化数据
-    this.loadData()
+  	$('#to-top, #to-bottom').fadeOut('fast')
+  	this.loadData()
 
-    var screenCollapse = $('#screen-collapse')
-    var self = this
+  	var self = this
     // 筛选面板展开时按钮变色、隐藏筛选信息
-    screenCollapse.on('show.bs.collapse', function () {
+    $('#screen-collapse').on('show.bs.collapse', function () {
     	self.screenHidden = false
     })
     // 筛选面板收起后按钮变色、显示筛选信息、隐藏更多标签；若有更多标签被激活则不隐藏
-    screenCollapse.on('hidden.bs.collapse', function () {
+    $('#screen-collapse').on('hidden.bs.collapse', function () {
     	self.screenHidden = true
     	self.moreHidden = true
     	if (self.activeTags.length > 0) {
@@ -697,6 +689,9 @@ export default {
     		}
     	}
     })
+
+    var toTop = $('#to-top')
+    var toBottom = $('#to-bottom')
     // 页面滚动时收起筛选面板及搜索框，快到顶部时显示顶部导航栏；在顶部时隐藏向上和刷新按钮，在底部时隐藏向下按钮
     $(document).on('scroll', function () {
     	self.onFold()

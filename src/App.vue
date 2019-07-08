@@ -36,5 +36,4 @@ export default {}
 .footer .nav-link i {
   font-size: 1.5rem;
 }
-
 </style>

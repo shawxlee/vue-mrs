@@ -18,7 +18,7 @@ export default new Router({
       name: 'AllRcmd',
       component: AllRcmd, // 正常加载主页
       meta: {
-        title: 'all-rcmd',
+        title: 'AllRcmd',
         keepAlive: true
       }
     },
@@ -27,7 +27,7 @@ export default new Router({
       name: 'ToWatch',
       component: () => import('./views/ToWatch.vue'), // 懒加载第2页
       meta: {
-        title: 'to-watch',
+        title: 'ToWatch',
         keepAlive: true
       }
     },
@@ -36,7 +36,7 @@ export default new Router({
       name: 'MyReview',
       component: () => import('./views/MyReview.vue'), // 懒加载第3页
       meta: {
-        title: 'my-review',
+        title: 'MyReview',
         keepAlive: true
       }
     },
@@ -45,7 +45,7 @@ export default new Router({
       name: 'AppSetting',
       component: () => import('./views/AppSetting.vue'), // 懒加载第4页
       meta: {
-        title: 'app-setting',
+        title: 'AppSetting',
         keepAlive: true
       }
     }
